@@ -35,3 +35,16 @@ class DBClient():
                 conn.commit()
         finally:
             conn.close()
+
+    def query_revenue_growth_by_id(self, electronic_id):
+        conn = self.get_connection()
+
+        try:
+            with conn.cursor() as cursor:
+                query = 'SELECT annual_revenue_growth FROM ' + TABLE + \
+                        ' WHERE electronic_id = %s'
+                cursor.execute(query, (electronic_id))
+                result = cursor.fetchone()
+                return result[0] if result is not None else None
+        finally:
+            conn.close()
