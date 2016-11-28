@@ -4,7 +4,7 @@ from lxml import etree
 from organization import Organization
 
 # The number of objects to process in the source index file
-RANGE = 20
+LIMIT = 20
 
 # Keys in the json index file
 ORGANIZATION_NAME = 'OrganizationName'
@@ -26,7 +26,7 @@ def parse_json_index(json_file, prefix):
     i = 0
     objects_990 = (obj for obj in objects if obj[FORM_TYPE] == '990')
     for obj in objects_990:
-        if i == RANGE:
+        if i == LIMIT:
             break
         else:
             i += 1
