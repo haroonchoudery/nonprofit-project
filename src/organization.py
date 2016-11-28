@@ -26,7 +26,7 @@ class Organization():
     def set_annual_revenue_growth(self, current_year_revenue, prior_year_revenue):
         if current_year_revenue is None or \
            prior_year_revenue is None or \
-           prior_year_revenue == 0:
+           int(prior_year_revenue) == 0:
            self.annual_revenue_growth = None
         else:
            growth = float(current_year_revenue) / float(prior_year_revenue) - 1
