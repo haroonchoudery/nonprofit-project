@@ -4,7 +4,7 @@ from lxml import etree
 from organization import Organization
 
 # The number of objects to process in the source index file
-LIMIT = 500
+LIMIT = 50
 
 # Keys in the json index file
 ORGANIZATION_NAME = 'OrganizationName'

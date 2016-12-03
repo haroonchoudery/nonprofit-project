@@ -14,3 +14,9 @@ yum install git
 
 Environment Requirement:
 Amazon Linux AMI 2016.09.0.20161028 x86_64 HVM GP2
+
+Setup Instructions:
+# Start the mysql server:
+sudo /etc/init.d/mysqld start
+# Start the webapp:
+python /<directory to the nonprofit-project>/src/webapp.py
