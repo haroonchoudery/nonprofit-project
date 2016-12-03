@@ -5,7 +5,7 @@ TABLE = 'tax_exempt_organizations'
 USER = 'root'
 PASSWORD = ''
 HOST = 'localhost'
-COLUMNS = '(electronic_id, organization_name, organization_type, ' \
+COLUMNS = '(electronic_id, tax_year, form_type, organization_name, organization_type, ' \
           'current_year_revenue, prior_year_revenue, annual_revenue_growth)'
 
 class DBClient():
@@ -22,15 +22,19 @@ class DBClient():
         conn = self.get_connection()
         try:
             with conn.cursor() as cursor:
+                delete_existing_record = 'DELETE FROM ' + TABLE + ' WHERE ELECTRONIC_ID = %s AND TAX_YEAR = %s'
                 insert_new_organization = 'INSERT INTO ' + TABLE + COLUMNS + \
-                                          ' VALUES (%s, %s, %s, %s, %s, %s)'
+                                          ' VALUES (%s, %s, %s, %s, %s, %s, %s, %s)'
+                cursor.execute(delete_existing_record, (org['electronic_id'], org['tax_year']))
                 cursor.execute(insert_new_organization,
-                               (org.electronic_id,
-                                org.organization_name,
-                                org.organization_type,
-                                org.current_year_revenue,
-                                org.prior_year_revenue,
-                                org.annual_revenue_growth))
+                               (org['electronic_id'],
+                                org['tax_year'],
+                                org['form_type'],
+                                org['organization_name'],
+                                org['organization_type'],
+                                org['current_year_revenue'],
+                                org['prior_year_revenue'],
+                                org['annual_revenue_growth']))
                 conn.commit()
         finally:
             conn.close()

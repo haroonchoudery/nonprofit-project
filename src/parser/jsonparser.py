@@ -19,17 +19,23 @@ def parse_json_index(url, prefix):
     objects = ijson.items(index, prefix)
 
     i = 0
-    objects_990 = (obj for obj in objects if obj[FORM_TYPE] == '990')
+    objects_990 = (obj for obj in objects if obj[FORM_TYPE] in ['990','990EZ'])
     for obj in objects_990:
         if i == LIMIT:
             break
         else:
             i += 1
-            org_type, current_year_revenue, prior_year_revenue = \
-                xmlparser.parse_xml_form(obj[URL])
-            org = Organization(obj[ELECTRONIC_ID],
-                               obj[ORGANIZATION_NAME],
-                               org_type,
-                               current_year_revenue,
-                               prior_year_revenue)
-            yield org
+            tax_year, organization_type, current_year_revenue, prior_year_revenue = xmlparser.parse_xml_form(obj[URL])
+            org = Organization(electronic_id = obj[ELECTRONIC_ID],
+                                        tax_year = tax_year,
+                                        form_type = obj[FORM_TYPE],
+                                        organization_name = obj[ORGANIZATION_NAME],
+                                        organization_type = organization_type,
+                                        current_year_revenue = current_year_revenue,
+                                        prior_year_revenue = prior_year_revenue)
+            if (org['electronic_id'] is not None
+                and org['tax_year'] is not None
+                and org['form_type'] is not None):
+                    yield org
+            else:
+                continue

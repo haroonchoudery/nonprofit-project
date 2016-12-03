@@ -5,15 +5,21 @@ from lxml import etree
 ORGANIZATION_TYPE = "//*[re:test(local-name(), '^Organization.*')]"
 CURRENT_YEAR_REVENUE = './/{http://www.irs.gov/efile}CYTotalRevenueAmt'
 PRIOR_YEAR_REVENUE = './/{http://www.irs.gov/efile}PYTotalRevenueAmt'
+TAX_YEAR = './/{http://www.irs.gov/efile}TaxYr'
 
 def parse_xml_form(url):
     tree = etree.ElementTree(file=urllib2.urlopen(url))
     root=tree.getroot()
 
+    tax_year = get_tax_year(root)
     current_year_revenue = get_current_year_revenue(root)
     prior_year_revenue = get_prior_year_revenue(root)
     organization_type = get_organization_type(root)
-    return organization_type, current_year_revenue, prior_year_revenue
+    return tax_year, organization_type, current_year_revenue, prior_year_revenue
+
+def get_tax_year(root):
+    tax_year = root.find(TAX_YEAR)
+    return tax_year.text if tax_year is not None else None
 
 def get_current_year_revenue(root):
     current_year_revenue = root.find(CURRENT_YEAR_REVENUE)
