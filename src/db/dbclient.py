@@ -20,7 +20,6 @@ class DBClient():
 
     def insert(self, org):
         conn = self.get_connection()
-
         try:
             with conn.cursor() as cursor:
                 insert_new_organization = 'INSERT INTO ' + TABLE + COLUMNS + \
@@ -36,15 +35,49 @@ class DBClient():
         finally:
             conn.close()
 
-    def query_revenue_growth_by_id(self, electronic_id):
+    def query_by_id(self, electronic_id):
         conn = self.get_connection()
-
         try:
             with conn.cursor() as cursor:
                 query = 'SELECT annual_revenue_growth FROM ' + TABLE + \
                         ' WHERE electronic_id = %s'
                 cursor.execute(query, (electronic_id))
                 result = cursor.fetchone()
-                return result[0] if result is not None else None
+                return result
         finally:
             conn.close()
+
+    def query_by_name(self, organization_name):
+        conn = self.get_connection()
+        try:
+            with conn.cursor() as cursor:
+                query = 'SELECT annual_revenue_growth FROM ' + TABLE + \
+                        ' WHERE organization_name = %s'
+                cursor.execute(query, (organization_name))
+                result = cursor.fetchone()
+                return result
+        finally:
+            conn.close()
+
+    def query_by_type(self, organization_type, limit):
+        conn = self.get_connection()
+        try:
+            with conn.cursor() as cursor:
+                query = 'SELECT organization_name, annual_revenue_growth FROM ' + \
+                TABLE + ' WHERE organization_type = %s ORDER BY annual_revenue_growth DESC LIMIT %s'
+                cursor.execute(query, (organization_type, limit))
+                result = cursor.fetchall()
+                return result
+        finally:
+            conn.close()
+
+    def query_revenue_growth(self, key):
+        id_result = self.query_by_id(key)
+        if id_result:
+            return id_result[0]
+
+        name_result = self.query_by_name(key)
+        if name_result:
+            return name_result[0]
+
+        return None

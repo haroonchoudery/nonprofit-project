@@ -28,8 +28,8 @@ def parse_json_index(url, prefix):
             org_type, current_year_revenue, prior_year_revenue = \
                 xmlparser.parse_xml_form(obj[URL])
             org = Organization(obj[ELECTRONIC_ID],
-                                        obj[ORGANIZATION_NAME],
-                                        org_type,
-                                        current_year_revenue,
-                                        prior_year_revenue)
+                               obj[ORGANIZATION_NAME],
+                               org_type,
+                               current_year_revenue,
+                               prior_year_revenue)
             yield org
