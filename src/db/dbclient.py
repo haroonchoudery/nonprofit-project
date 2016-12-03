@@ -32,8 +32,8 @@ class DBClient():
                                 org['form_type'],
                                 org['organization_name'],
                                 org['organization_type'],
-                                org['current_year_revenue'],
-                                org['prior_year_revenue'],
+                                org['cy_total_revenue'],
+                                org['py_total_revenue'],
                                 org['annual_revenue_growth']))
                 conn.commit()
         finally:

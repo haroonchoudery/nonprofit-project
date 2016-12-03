@@ -1,33 +1,55 @@
 import urllib2
 from lxml import etree
+from collections import defaultdict
 
 # Paths in the xml tax form
 ORGANIZATION_TYPE = "//*[re:test(local-name(), '^Organization.*')]"
-CURRENT_YEAR_REVENUE = './/{http://www.irs.gov/efile}CYTotalRevenueAmt'
-PRIOR_YEAR_REVENUE = './/{http://www.irs.gov/efile}PYTotalRevenueAmt'
+CY_TOTAL_REVENUE = './/{http://www.irs.gov/efile}CYTotalRevenueAmt'
+PY_TOTAL_REVENUE = './/{http://www.irs.gov/efile}PYTotalRevenueAmt'
+CY_TOTAL_REVENUE_EZ = './/{http://www.irs.gov/efile}TotalRevenueAmt'
 TAX_YEAR = './/{http://www.irs.gov/efile}TaxYr'
+CY_CONTRIBUTIONS = './/{http://www.irs.gov/efile}CYContributionsGrantsAmt'
+PY_CONTRIBUTIONS = './/{http://www.irs.gov/efile}PYContributionsGrantsAmt'
+CY_CONTRIBUTIONS_EZ = './/{http://www.irs.gov/efile}ContributionsGiftsGrantsEtcAmt'
+CY_SERVICE_REV = './/{http://www.irs.gov/efile}CYProgramServiceRevenueAmt'
+PY_SERVICE_REV = './/{http://www.irs.gov/efile}PYProgramServiceRevenueAmt'
+CY_SERVICE_REV_EZ = './/{http://www.irs.gov/efile}ProgramServiceRevenueAmt'
 
-def parse_xml_form(url):
+
+def parse_xml_form(url, form_type):
     tree = etree.ElementTree(file=urllib2.urlopen(url))
     root=tree.getroot()
 
-    tax_year = get_tax_year(root)
-    current_year_revenue = get_current_year_revenue(root)
-    prior_year_revenue = get_prior_year_revenue(root)
-    organization_type = get_organization_type(root)
-    return tax_year, organization_type, current_year_revenue, prior_year_revenue
+    if form_type == '990':
+        fields = get_990_fields(root)
+    elif form_type == '990EZ':
+        fields = get_990ez_fields(root)
+        
+    fields['tax_year'] = get_field_abstract(root, TAX_YEAR)
+    fields['organization_type'] = get_organization_type(root)
+    
+    return fields
 
-def get_tax_year(root):
-    tax_year = root.find(TAX_YEAR)
-    return tax_year.text if tax_year is not None else None
+def get_990_fields(root):
+    fields = defaultdict(lambda: None)
+    fields['cy_total_revenue'] = get_field_abstract(root, CY_TOTAL_REVENUE)
+    fields['py_total_revenue'] = get_field_abstract(root, PY_TOTAL_REVENUE)
+    fields['cy_contributions'] = get_field_abstract(root, CY_CONTRIBUTIONS)
+    fields['py_contributions'] = get_field_abstract(root, PY_CONTRIBUTIONS)
+    fields['cy_service_rev'] = get_field_abstract(root, CY_SERVICE_REV)
+    fields['py_service_rev'] = get_field_abstract(root, PY_SERVICE_REV)
+    return fields
 
-def get_current_year_revenue(root):
-    current_year_revenue = root.find(CURRENT_YEAR_REVENUE)
-    return current_year_revenue.text if current_year_revenue is not None else None
+def get_990ez_fields(root):
+    fields = defaultdict(lambda: None)
+    fields['cy_total_revenue'] = get_field_abstract(root, CY_TOTAL_REVENUE_EZ)
+    fields['cy_contributions'] = get_field_abstract(root, CY_CONTRIBUTIONS_EZ)
+    fields['cy_service_rev'] = get_field_abstract(root, CY_SERVICE_REV_EZ)
+    return fields
 
-def get_prior_year_revenue(root):
-    prior_year_revenue = root.find(PRIOR_YEAR_REVENUE)
-    return prior_year_revenue.text if prior_year_revenue is not None else None
+def get_field_abstract(root, field):
+    value = root.find(field)
+    return value.text if value is not None else None
 
 def get_organization_type(root):
     organization_tag = root.xpath(ORGANIZATION_TYPE,
