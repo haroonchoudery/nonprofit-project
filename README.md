@@ -1,4 +1,4 @@
-W205 Final Project  
+**W205 Final Project**
 
 This project aims at providing a way to measure the performance of organizations in non-profit sector.  
 
@@ -15,8 +15,8 @@ Environment Requirement:
 Amazon Linux AMI 2016.09.0.20161028 x86_64 HVM GP2  
 
 Database Setup Instructions:  
-sh /<directory to the nonprofit-project>/setup_db.sh  
+sh \<path to the nonprofit-project\>/setup_db.sh  
 
 Server Setup Instructions:  
 sudo /etc/init.d/mysqld start  
-sudo python /<directory to the nonprofit-project>/src/webapp.py
+sudo python \<directory to the nonprofit-project\>/src/webapp.py
