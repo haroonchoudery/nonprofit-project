@@ -10,4 +10,4 @@ if __name__ == "__main__":
     for url, prefix in data_dict.items():
         for organization in jsonparser.parse_json_index(url, prefix):
             print organization
-            dbclient.insert(organization)
+            dbclient.upsert(organization)

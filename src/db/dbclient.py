@@ -18,7 +18,7 @@ class DBClient():
                                host=HOST,
                                db=DATABASE)
 
-    def insert(self, org):
+    def upsert(self, org):
         conn = self.get_connection()
         try:
             with conn.cursor() as cursor:
