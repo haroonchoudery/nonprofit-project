@@ -1,9 +1,10 @@
-from bottle import route, run
 from db.dbclient import DBClient
+from flask import Flask
 
 mysql_client = DBClient()
+app = Flask(__name__)
 
-@route('/growth/<key>', method = 'GET')
+@app.route('/growth/<key>', methods = ['GET'])
 def get_revenue_growth(key):
     revenue_growth = mysql_client.query_revenue_growth(key)
     if revenue_growth is None:
@@ -12,7 +13,7 @@ def get_revenue_growth(key):
         return 'The annual growth of the organization with electronic id or name %s is %s\n' \
                % (key, revenue_growth)
 
-@route('/ranking/<organization_type>/<limit>', method = 'GET')
+@app.route('/ranking/<organization_type>/<limit>', methods = ['GET'])
 def get_revenue_growth_ranking(organization_type, limit):
     revenue_growth_ranking = mysql_client.query_by_type(organization_type, int(limit))
     if len(revenue_growth_ranking) == 0:
@@ -21,8 +22,9 @@ def get_revenue_growth_ranking(organization_type, limit):
         return 'The annual growth ranking of organization type %s is %s\n' \
                % (organization_type, revenue_growth_ranking)
 
-@route('/status', method = 'GET')
+@app.route('/status', methods = ['GET'])
 def get_status():
     return "It is working!\n"
 
-run(host='0.0.0.0', port=80)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=80)

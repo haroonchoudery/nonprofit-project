@@ -3,7 +3,7 @@
 This project aims at providing a way to measure the performance of organizations in non-profit sector.  
 
 Dependencies Requirements:  
-pip install bottle  
+pip install Flask 
 pip install PyMySQL  
 pip install ijson  
 pip install lxml  
