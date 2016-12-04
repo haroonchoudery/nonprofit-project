@@ -2,8 +2,7 @@ import urllib2
 from lxml import etree
 from collections import defaultdict
 
-# Paths in the xml tax form
-ORGANIZATION_TYPE = "//*[re:test(local-name(), '^Organization.*')]"
+# Predefined paths in the xml tax form
 CY_TOTAL_REVENUE = './/{http://www.irs.gov/efile}CYTotalRevenueAmt'
 PY_TOTAL_REVENUE = './/{http://www.irs.gov/efile}PYTotalRevenueAmt'
 CY_TOTAL_REVENUE_EZ = './/{http://www.irs.gov/efile}TotalRevenueAmt'
@@ -15,7 +14,6 @@ CY_SERVICE_REV = './/{http://www.irs.gov/efile}CYProgramServiceRevenueAmt'
 PY_SERVICE_REV = './/{http://www.irs.gov/efile}PYProgramServiceRevenueAmt'
 CY_SERVICE_REV_EZ = './/{http://www.irs.gov/efile}ProgramServiceRevenueAmt'
 
-
 def parse_xml_form(url, form_type):
     tree = etree.ElementTree(file=urllib2.urlopen(url))
     root=tree.getroot()
@@ -24,10 +22,10 @@ def parse_xml_form(url, form_type):
         fields = get_990_fields(root)
     elif form_type == '990EZ':
         fields = get_990ez_fields(root)
-        
+
     fields['tax_year'] = get_field_abstract(root, TAX_YEAR)
     fields['organization_type'] = get_organization_type(root)
-    
+
     return fields
 
 def get_990_fields(root):
@@ -52,8 +50,10 @@ def get_field_abstract(root, field):
     return value.text if value is not None else None
 
 def get_organization_type(root):
-    organization_tag = root.xpath(ORGANIZATION_TYPE,
-                                  namespaces={'re': "http://exslt.org/regular-expressions"})[0].tag
+    # Unlike other values, the organization type will be embedded in the xml tag.
+    # We will use the below regex to extract it.
+    type_regex = "//*[re:test(local-name(), '^Organization.*')]"
+    organization_tag = root.xpath(type_regex, namespaces={'re': "http://exslt.org/regular-expressions"})[0].tag
     if organization_tag is None:
         return None
     else:
