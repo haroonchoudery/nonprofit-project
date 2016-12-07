@@ -20,4 +20,3 @@ if __name__ == "__main__":
         for organization in jsonparser.parse_json_index(url, prefix, LIMIT):
             print organization
             dbclient.upsert(organization)
-    dbclient.close_connection()
