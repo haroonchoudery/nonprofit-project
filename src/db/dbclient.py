@@ -2,13 +2,14 @@ from functools import wraps
 from mysql.connector.pooling import MySQLConnectionPool
 
 DATABASE = 'organizations'
-TABLE = 'tax_exempt_organizations'
+DML_TABLE = 'tax_exempt_organizations'
+VIEW = 'tax_exempt_organizations_current'
 USER = 'root'
 PASSWORD = ''
 HOST = 'localhost'
-COLUMNS = '(electronic_id, form_type, organization_name, organization_type, ' \
+COLUMNS = '(electronic_id, tax_year, form_type, organization_name, organization_type, ' \
           'cy_total_revenue, py_total_revenue, cy_service_revenue, py_service_revenue, '\
-          'cy_contributions, py_contributions, annual_totoal_revenue_growth, '\
+          'cy_contributions, py_contributions, annual_total_revenue_growth, '\
           'annual_service_revenue_growth, annual_contributions_growth)'
 
 class DBClient(object):
@@ -31,12 +32,13 @@ class DBClient(object):
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:
-            delete_existing_record = 'DELETE FROM ' + TABLE + ' WHERE ELECTRONIC_ID = %s'
-            insert_new_organization = 'INSERT INTO ' + TABLE + COLUMNS + \
-                                      ' VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
-            cursor.execute(delete_existing_record, (org['electronic_id'],))
+            delete_existing_record = 'DELETE FROM ' + DML_TABLE + ' WHERE ELECTRONIC_ID = %s AND TAX_YEAR = %s'
+            insert_new_organization = 'INSERT INTO ' + DML_TABLE + COLUMNS + \
+                                      ' VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+            cursor.execute(delete_existing_record, (org['electronic_id'],org['tax_year']))
             cursor.execute(insert_new_organization,
                            (org['electronic_id'],
+                            org['tax_year'],
                             org['form_type'],
                             org['organization_name'],
                             org['organization_type'],
@@ -46,7 +48,7 @@ class DBClient(object):
                             org['py_service_revenue'],
                             org['cy_contributions'],
                             org['py_contributions'],
-                            org['annual_totoal_revenue_growth'],
+                            org['annual_total_revenue_growth'],
                             org['annual_service_revenue_growth'],
                             org['annual_contributions_growth']))
             cnx.commit()
@@ -61,7 +63,7 @@ class DBClient(object):
         cursor = cnx.cursor()
         try:
             with self.conn.cursor() as cursor:
-                query = 'SELECT * FROM ' + TABLE + \
+                query = 'SELECT * FROM ' + VIEW + \
                         ' WHERE electronic_id = %s'
                 cursor.execute(query, (electronic_id))
                 result = cursor.fetchall()[0]
@@ -77,7 +79,7 @@ class DBClient(object):
         cursor = cnx.cursor()
         try:
             with self.conn.cursor() as cursor:
-                query = 'SELECT * FROM ' + TABLE + \
+                query = 'SELECT * FROM ' + VIEW + \
                         ' WHERE organization_name = %s'
                 cursor.execute(query, (organization_name))
                 result = cursor.fetchone()[0]
@@ -93,8 +95,8 @@ class DBClient(object):
         cursor = cnx.cursor()
         try:
             with self.conn.cursor() as cursor:
-                query = 'SELECT * FROM ' + TABLE + \
-                        ' WHERE organization_type = %s ORDER BY annual_totoal_revenue_growth DESC LIMIT %s'
+                query = 'SELECT * FROM ' + VIEW + \
+                        ' WHERE organization_type = %s ORDER BY annual_total_revenue_growth DESC LIMIT %s'
                 cursor.execute(query, (organization_type, limit))
                 result = cursor.fetchall()
                 return result

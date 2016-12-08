@@ -9,6 +9,9 @@ import urllib2
 from lxml import etree
 from collections import defaultdict
 
+# Predefined xml paths common to Form 990 and Form 990EZ
+TAX_YEAR = './/{http://www.irs.gov/efile}TaxYr'
+
 # Predefined xml paths for interested elements for 990 form
 CY_TOTAL_REVENUE = './/{http://www.irs.gov/efile}CYTotalRevenueAmt'
 PY_TOTAL_REVENUE = './/{http://www.irs.gov/efile}PYTotalRevenueAmt'
@@ -16,11 +19,15 @@ CY_CONTRIBUTIONS = './/{http://www.irs.gov/efile}CYContributionsGrantsAmt'
 PY_CONTRIBUTIONS = './/{http://www.irs.gov/efile}PYContributionsGrantsAmt'
 CY_SERVICE_REV = './/{http://www.irs.gov/efile}CYProgramServiceRevenueAmt'
 PY_SERVICE_REV = './/{http://www.irs.gov/efile}PYProgramServiceRevenueAmt'
+CY_INVESTMENT_INCOME = './/{http://www.irs.gov/efile}PYProgramServiceRevenueAmt'
+PY_INVESTMENT_INCOME = './/{http://www.irs.gov/efile}PYProgramServiceRevenueAmt'
 
 # Predefined xml paths for interested elements for 990EZ form
 CY_TOTAL_REVENUE_EZ = './/{http://www.irs.gov/efile}TotalRevenueAmt'
 CY_CONTRIBUTIONS_EZ = './/{http://www.irs.gov/efile}ContributionsGiftsGrantsEtcAmt'
 CY_SERVICE_REV_EZ = './/{http://www.irs.gov/efile}ProgramServiceRevenueAmt'
+CY_INVESTMENT_INCOME_EZ = './/{http://www.irs.gov/efile}GrossInvestmentIncome509Grp'
+CY_GRANTS_PAID = './/{http://www.irs.gov/efile}GrantsAndAllocationsAmt'
 
 def parse_xml_form(url, form_type):
     tree = etree.ElementTree(file=urllib2.urlopen(url))
@@ -32,6 +39,7 @@ def parse_xml_form(url, form_type):
         fields = get_990ez_fields(root)
 
     fields['organization_type'] = get_organization_type(root)
+    fields['tax_year'] = get_field_abstract(root, TAX_YEAR)
     return fields
 
 def get_990_fields(root):
