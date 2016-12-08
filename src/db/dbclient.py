@@ -47,7 +47,7 @@ class DBClient(object):
                             org['cy_service_revenue'],
                             org['py_service_revenue'],
                             org['cy_contributions'],
-                            org['py_contributions']
+                            org['py_contributions'],
                             org['annual_total_revenue_growth'],
                             org['annual_service_revenue_growth'],
                             org['annual_contributions_growth']))
