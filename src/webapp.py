@@ -12,12 +12,11 @@ def index():
 @app.route('/growth')
 def get_revenue_growth():
     key = request.form['key']
-    print key
     revenue_growth = mysql_client.query_revenue_growth(key)
-    # if revenue_growth is None:
-    #     return 'There is no organization with electronic id or name %s\n' % key
-    # else:
-    #     return 'The annual growth of the organization with electronic id or name %s is %s\n' % (key, revenue_growth)
+    if revenue_growth is None:
+        return 'There is no organization with electronic id or name %s\n' % key
+    else:
+        return 'The annual growth of the organization with electronic id or name %s is %s\n' % (key, revenue_growth)
 
 @app.route('/ranking/<organization_type>/<limit>', methods = ['GET'])
 def get_revenue_growth_ranking(organization_type, limit):
