@@ -9,15 +9,14 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/growth', methods = ['GET', 'POST'])
+@app.route('/growth', methods = ['POST'])
 def get_revenue_growth():
-    if request.method == 'GET':
-        key = request.form['key']
-        revenue_growth = mysql_client.query_revenue_growth(key)
-        if revenue_growth is None:
-            return 'There is no organization with electronic id or name %s\n' % key
-        else:
-            return 'The annual growth of the organization with electronic id or name %s is %s\n' % (key, revenue_growth)
+    key = request.form['key']
+    revenue_growth = mysql_client.query_revenue_growth(key)
+    if revenue_growth is None:
+        return 'There is no organization with electronic id or name %s\n' % key
+    else:
+        return 'The annual growth of the organization with electronic id or name %s is %s\n' % (key, revenue_growth)
 
     # return render_template("index.html",revenue_growth = revenue_growth)
 
