@@ -5,20 +5,18 @@ from flask import render_template
 mysql_client = DBClient()
 app = Flask(__name__)
 
-@app.route('/index')
+@app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/growth', methods = ['POST'])
 def get_revenue_growth():
     key = request.form['key']
-    print key
-    return render_template('index.html')
-    # revenue_growth = mysql_client.query_revenue_growth(key)
-    # if revenue_growth is None:
-    #     return 'There is no organization with electronic id or name %s\n' % key
-    # else:
-    #     return 'The annual growth of the organization with electronic id or name %s is %s\n' % (key, revenue_growth)
+    revenue_growth = mysql_client.query_revenue_growth(key)
+    if revenue_growth is None:
+        return 'There is no organization with electronic id or name %s\n' % key
+    else:
+        return 'The annual growth of the organization with electronic id or name %s is %s\n' % (key, revenue_growth)
 
     # return render_template("index.html",revenue_growth = revenue_growth)
 
@@ -36,4 +34,4 @@ def get_status():
     return "It is working!\n"
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
+    app.run()
