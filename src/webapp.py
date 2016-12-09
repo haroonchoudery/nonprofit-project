@@ -4,6 +4,10 @@ from flask import Flask
 mysql_client = DBClient()
 app = Flask(__name__)
 
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
 @app.route('/growth/<key>', methods = ['GET'])
 def get_revenue_growth(key):
     revenue_growth = mysql_client.query_revenue_growth(key)
