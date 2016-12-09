@@ -64,7 +64,7 @@ class DBClient(object):
         try:
             query = 'SELECT * FROM ' + VIEW + \
                     ' WHERE electronic_id = %s'
-            cursor.execute(query, (electronic_id))
+            cursor.execute(query, (electronic_id,))
             result = cursor.fetchall()[0]
             return result
         except Exception, error:
@@ -79,7 +79,7 @@ class DBClient(object):
         try:
             query = 'SELECT * FROM ' + VIEW + \
                     ' WHERE organization_name = %s'
-            cursor.execute(query, (organization_name))
+            cursor.execute(query, (organization_name,))
             result = cursor.fetchone()[0]
             return result
         except Exception, error:
