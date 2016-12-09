@@ -62,12 +62,11 @@ class DBClient(object):
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:
-            with self.conn.cursor() as cursor:
-                query = 'SELECT * FROM ' + VIEW + \
-                        ' WHERE electronic_id = %s'
-                cursor.execute(query, (electronic_id))
-                result = cursor.fetchall()[0]
-                return result
+            query = 'SELECT * FROM ' + VIEW + \
+                    ' WHERE electronic_id = %s'
+            cursor.execute(query, (electronic_id,))
+            result = cursor.fetchall()[0]
+            return result
         except Exception, error:
             print error
         finally:
@@ -78,12 +77,11 @@ class DBClient(object):
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:
-            with self.conn.cursor() as cursor:
-                query = 'SELECT * FROM ' + VIEW + \
-                        ' WHERE organization_name = %s'
-                cursor.execute(query, (organization_name))
-                result = cursor.fetchone()[0]
-                return result
+            query = 'SELECT * FROM ' + VIEW + \
+                    ' WHERE organization_name = %s'
+            cursor.execute(query, (organization_name,))
+            result = cursor.fetchone()[0]
+            return result
         except Exception, error:
             print error
         finally:
@@ -94,12 +92,11 @@ class DBClient(object):
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:
-            with self.conn.cursor() as cursor:
-                query = 'SELECT * FROM ' + VIEW + \
-                        ' WHERE organization_type = %s ORDER BY annual_total_revenue_growth DESC LIMIT %s'
-                cursor.execute(query, (organization_type, limit))
-                result = cursor.fetchall()
-                return result
+            query = 'SELECT * FROM ' + VIEW + \
+                    ' WHERE organization_type = %s ORDER BY annual_total_revenue_growth DESC LIMIT %s'
+            cursor.execute(query, (organization_type, limit))
+            result = cursor.fetchall()
+            return result
         except Exception, error:
             print error
         finally:
