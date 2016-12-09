@@ -19,7 +19,7 @@ def get_revenue_growth():
     # else:
     #     return 'The annual growth of the organization with electronic id or name %s is %s\n' % (key, revenue_growth)
 
-    return render_template("index.html",revenue_growth = revenue_growth)
+    return render_template("index.html", revenue_growth = revenue_growth)
 
 @app.route('/ranking/<organization_type>/<limit>', methods = ['GET'])
 def get_revenue_growth_ranking(organization_type, limit):
