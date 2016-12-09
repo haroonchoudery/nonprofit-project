@@ -4,7 +4,7 @@ This project aims at providing a way to measure the performance of organizations
 
 Dependencies Requirements:  
 pip install Flask  
-pip install PyMySQL  
+pip install mysql-connector  
 pip install ijson  
 pip install lxml  
 yum install mysql-server  
