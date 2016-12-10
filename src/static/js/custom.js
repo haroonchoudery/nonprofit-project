@@ -12,7 +12,7 @@ $(function() {
             	var returnedData = JSON.parse(response);
                 $('#total_score').text(returnedData.revenue_growth);
                 // var revenue_growth = returnedData.revenue_growth;
-                $('#results').show(2500);
+                $('#results').show(1500);
                 console.log(response);	
             },
             error: function(error) {
