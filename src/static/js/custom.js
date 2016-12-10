@@ -5,7 +5,7 @@ $(function() {
 	$(query).submit(function(event) {
     // Stop the browser from submitting the form.
     event.preventDefault();
-	}
+	});
 
     $(query).submit(function() {
         $.ajax({
