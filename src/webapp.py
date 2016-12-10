@@ -12,14 +12,17 @@ def index():
 
 @app.route('/score', methods = ['POST'])
 def get_revenue_growth():
-    key = request.args.get('formData')
-    revenue_growth = mysql_client.query_revenue_growth(key)
-    # if revenue_growth is None:
-    #     return 'There is no organization with electronic id or name %s\n' % key
-    # else:
-    #     return 'The annual growth of the organization with electronic id or name %s is %s\n' % (key, revenue_growth)
+    # key = request.form['key']
+    # revenue_growth = mysql_client.query_revenue_growth(key)
+    # # if revenue_growth is None:
+    # #     return 'There is no organization with electronic id or name %s\n' % key
+    # # else:
+    # #     return 'The annual growth of the organization with electronic id or name %s is %s\n' % (key, revenue_growth)
 
-    return jsonify(revenue_growth = revenue_growth, key=key)
+    # return render_template("index.html", revenue_growth = revenue_growth)
+
+    key = request.args.get('key')
+    return jsonify(score=score, key=key)
 
 @app.route('/ranking/<organization_type>/<limit>', methods = ['GET'])
 def get_revenue_growth_ranking(organization_type, limit):
