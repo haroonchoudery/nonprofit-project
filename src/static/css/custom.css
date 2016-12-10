@@ -1,5 +1,5 @@
-#total_score {
-	color: #2196F3;
+h1#total_score {
+	text-decoration-color: #2196F3;
 }
 
 .level-img-right > .container {
