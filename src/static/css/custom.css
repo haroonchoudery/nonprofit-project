@@ -15,6 +15,6 @@ width: auto;
 	color: #FFF;
 }
 
-a[id = "app" ]:target ~ #main article.panel {
-    -webkit-transform: translateY( 0px);
-    transform: translateY( 0px );
+#app.level {
+	padding: 13.364rem 0 12.273rem;
+}
