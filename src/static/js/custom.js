@@ -4,6 +4,9 @@ $(function() {
 
     $(query).submit(function(event) {
     	event.preventDefault();
+        $('html, body').animate({
+        scrollTop: $("#app").offset().top
+        }, 2000);
         $.ajax({
             url: '/score',
             data: $(key).serialize(),
