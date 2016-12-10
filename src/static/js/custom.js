@@ -22,7 +22,7 @@ var formData = $(form).serialize();
 // Submit the form using AJAX.
 $.ajax({
     type: 'POST',
-    url: $(form).attr('action'),
+    url: '/score',
     data: formData;
 
 // 	.done(function(response) {
