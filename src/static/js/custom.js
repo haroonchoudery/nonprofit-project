@@ -3,6 +3,7 @@ $(function() {
 	var key = $('input[name="key"]').val();
 
     $(query).submit(function(event) {
+    	event.preventDefault();
         $.ajax({
             url: '/score',
             data: $(key).serialize(),
