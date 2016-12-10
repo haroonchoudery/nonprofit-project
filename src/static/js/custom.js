@@ -2,12 +2,8 @@ $(function() {
 	var query = $('#query');
 	var key = $('input[name="key"]').val();
 
-	$(query).submit(function(event) {
-    // Stop the browser from submitting the form.
-    event.preventDefault();
-	});
-
-    $(query).submit(function() {
+    $(query).submit(function(event) {
+    	event.preventDefault();
         $.ajax({
             url: '/score',
             data: $(key).serialize(),
