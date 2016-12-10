@@ -3,7 +3,7 @@ $(function() {
 	var key = $('#key');
 
     $(query).submit(function(event) {
-        event.preventDefault();
+        // event.preventDefault();
         $(query).on('submit', function() {
             $('html, body').animate({
                  scrollTop: $("#results").offset().top
