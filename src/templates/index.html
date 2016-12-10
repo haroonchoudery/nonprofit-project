@@ -74,8 +74,8 @@
 			<div class="row">
 		        <div class="col-sm-5 col-md-8 col-md-offset-2 col-sm-offset-1">
 		            <div id="custom-search-input">
-		                <form class="input-group col-md-12" action="/growth#score" method="POST">
-		                    <input name="key" type="text" class="form-control input-lg" placeholder="Enter Nonprofit ID" />
+		                <form class="input-group col-md-12" action="/score" id="query" method="POST">
+		                    <input name="key" id="key" type="text" class="form-control input-lg" placeholder="Enter Nonprofit ID" />
 		                    <span class="input-group-btn">
 		                        <button class="btn btn-info btn-lg" type="submit">
 		                            <i class="glyphicon glyphicon-search"></i>
@@ -88,7 +88,7 @@
 		</div>
 <!-- End Search Bar Code -->
 
-<!-- Results Code -->
+<!-- Search Output Code -->
 		{% if revenue_growth %}
 		<div id="score">
 			<div class="container mb-100 xs-mb-40">
@@ -108,7 +108,7 @@
 			</div>
 		</div>
 		{% endif %}
-<!-- End Results Code -->
+<!-- Search Output Code -->
 	
 	</div>
 
@@ -213,6 +213,7 @@
 	<script src="../static/js/dropdown.js"></script>
 	<script src="../static/js/modal.js"></script>
 	<script src="../static/js/main.js"></script>
+	<script src="../static/js/custom.js"></script>
 	<!-- //-end- concat_js -->
 
 
