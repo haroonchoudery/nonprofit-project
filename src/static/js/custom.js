@@ -3,7 +3,7 @@ $(function() {
 	var key = $('#key');
 
     $(query).submit(function(event) {
-    	// event.preventDefault();
+    	event.preventDefault();
         $.ajax({
             url: '/score',
             data: $(key).serialize(),
