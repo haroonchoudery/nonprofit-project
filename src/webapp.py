@@ -12,26 +12,21 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/test')
+def test():
+    return render_template('test.html')
+
 @app.route('/score', methods = ['POST'])
 def get_revenue_growth():
-    # key = request.form['key']
-    # revenue_growth = mysql_client.query_revenue_growth(key)
-    # # if revenue_growth is None:
-    # #     return 'There is no organization with electronic id or name %s\n' % key
-    # # else:
-    # #     return 'The annual growth of the organization with electronic id or name %s is %s\n' % (key, revenue_growth)
-
-    # return render_template("score.html", revenue_growth = revenue_growth)
-
+    
     key = request.form['key']
-
     if key.isdigit():
         key = int(key)
     else:
         key = key
 
     revenue_growth = mysql_client.query_revenue_growth(key)
-    
+
     return json.dumps({'status':'OK', 'key':key, 'revenue_growth':revenue_growth});
 
 @app.route('/ranking/<organization_type>/<limit>', methods = ['GET'])
