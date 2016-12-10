@@ -11,7 +11,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/score', methods = ['GET'])
+@app.route('/score')
 def get_revenue_growth():
     # key = request.form['key']
     # revenue_growth = mysql_client.query_revenue_growth(key)
