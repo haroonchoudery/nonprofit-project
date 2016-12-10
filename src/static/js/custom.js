@@ -3,9 +3,6 @@ $(function() {
 	var key = $('#key');
 
     $(query).submit(function(event) {
-    	$('html, body').animate({
-        scrollTop: $("#results").offset().top
-        }, 2000);
         event.preventDefault();
         $.ajax({
             url: '/score',
@@ -23,7 +20,14 @@ $(function() {
             }
         });
     });
+
+    $(query).click(function() {
+        $('html, body').animate({
+            scrollTop: $("#results").offset().top
+        }, 2000);
+    });
 });
+
 
 $(function() {
     $('a.page-scroll').bind('click', function(event) {
