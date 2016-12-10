@@ -10,7 +10,7 @@ $(function() {
             type: 'POST',
             success: function(response) {
             	var returnedData = JSON.parse(response);
-                $('#total_score').text(returnedData.revenue_growth);
+                $('#total_score').text("Score: " + returnedData.revenue_growth);
                 // var revenue_growth = returnedData.revenue_growth;
                 $('#results').show(1500);
                 console.log(response);	
