@@ -2,6 +2,7 @@ from db.dbclient import DBClient
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import jsonify
 
 mysql_client = DBClient()
 app = Flask(__name__)
