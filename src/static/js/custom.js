@@ -2,15 +2,14 @@ $(function() {
 	var query = $('#query');
 	var key = $('#key');
 
-    $(query).on('submit', function() {
-        $('html, body').animate({
-             scrollTop: $("#results").offset().top
-        }, 2000);
-        return false;
-    });
-
     $(query).submit(function(event) {
         event.preventDefault();
+        $(query).on('submit', function() {
+            $('html, body').animate({
+                 scrollTop: $("#results").offset().top
+            }, 2000);
+            return false;
+        });
         $.ajax({
             url: '/score',
             data: $(key).serialize(),
