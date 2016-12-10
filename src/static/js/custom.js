@@ -3,10 +3,10 @@ $(function() {
 	var key = $('#key');
 
     $(query).submit(function(event) {
-    	event.preventDefault();
-        $('html, body').animate({
+    	$('html, body').animate({
         scrollTop: $("#results").offset().top
         }, 2000);
+        event.preventDefault();
         $.ajax({
             url: '/score',
             data: $(key).serialize(),
