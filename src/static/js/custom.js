@@ -9,21 +9,21 @@ $(function() {
 });
 
 // Set up an event listener for the contact form.
-$(form).submit(function(event) {
-    // Stop the browser from submitting the form.
-    event.preventDefault();
-
-    // TODO
-});
+$(function() {
+    $('form').submit(function() {
+        $.ajax({
+            type: 'POST',
+            url: '/score',
+            data: formData;
+        });
+        return false;
+    }); 
+})
 
 // Serialize the form data.
 var formData = $(form).serialize();
 
 // Submit the form using AJAX.
-$.ajax({
-    type: 'POST',
-    url: '/score',
-    data: formData;
 
 // 	.done(function(response) {
 //     // Make sure that the formMessages div has the 'success' class.
@@ -36,7 +36,7 @@ $.ajax({
 //     // Clear the form.
 //     $('#key').val('');
 // })
-})
+// })
 
 // .fail(function(data) {
 //     // Make sure that the formMessages div has the 'error' class.
