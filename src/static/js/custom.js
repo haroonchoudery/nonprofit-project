@@ -10,7 +10,7 @@ $(function() {
             type: 'POST',
             success: function(response) {
                 console.log(response);
-                return revenue_growth;
+                return 'revenue_growth';
             },
             error: function(error) {
                 console.log(error);
