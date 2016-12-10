@@ -233,7 +233,7 @@ nav ul {
 @media ( max-width: 767px ) {
 	ul {
 		padding-left: 0;
-		list-style-position: inside;
+		list-style-position: auto;
 	}
 
 }
@@ -1079,7 +1079,7 @@ input.text:focus {
 /* home hero specific pages */
 
 .hero-home {
-	background-image: url("../img/bg-default.jpg");
+	background-image: url("../img/nonprofit.jpg");
 	background-color: #523129;
 	min-height: 400px;
 }
@@ -1152,7 +1152,7 @@ input.text:focus {
 .iphone-mobile {
 	height: 200px; 
 	width: 100%;
-	background: url("../img/v2/iphone6.min.png") 6% 0 no-repeat;
+	background: url("../img/nonprofit.jpg") 6% 0 no-repeat;
 	background-size: auto 100%; 
 }
 
@@ -1175,7 +1175,7 @@ input.text:focus {
 		margin-top: 2.727rem;
 		padding: 40px 15px 220px;
 		padding: 1.818rem 15px 10rem;
-		background: transparent url("../img/v2/iphone-bg-sm.min.png") 100% 100% no-repeat;
+		background: transparent url("../img/girl.jpg") 100% 100% no-repeat;
 		background-size: auto 90%;
 		
 	}
