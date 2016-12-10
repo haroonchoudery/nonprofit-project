@@ -21,13 +21,30 @@ CY_SERVICE_REV = './/{http://www.irs.gov/efile}CYProgramServiceRevenueAmt'
 PY_SERVICE_REV = './/{http://www.irs.gov/efile}PYProgramServiceRevenueAmt'
 CY_INVESTMENT_INCOME = './/{http://www.irs.gov/efile}PYProgramServiceRevenueAmt'
 PY_INVESTMENT_INCOME = './/{http://www.irs.gov/efile}PYProgramServiceRevenueAmt'
+CY_TOTAL_EXPENSES = './/{http://www.irs.gov/efile}CYTotalExpensesAmt'
+PY_TOTAL_EXPENSES = './/{http://www.irs.gov/efile}PYTotalExpensesAmt'
+CY_GRANTS_PAID = './/{http://www.irs.gov/efile}CYGrantsAndSimilarPaidAmt'
+PY_GRANTS_PAID = './/{http://www.irs.gov/efile}PYGrantsAndSimilarPaidAmt'
+CY_SALARIES = './/{http://www.irs.gov/efile}CYSalariesCompEmpBnftPaidAmt'
+PY_SALARIES = './/{http://www.irs.gov/efile}PYSalariesCompEmpBnftPaidAmt'
+CY_BENEFITS = './/{http://www.irs.gov/efile}CYBenefitsPaidToMembersAmt'
+PY_BENEFITS = './/{http://www.irs.gov/efile}PYBenefitsPaidToMembersAmt'
+TOTAL_ASSETS_BOY = './/{http://www.irs.gov/efile}TotalAssetsBOYAmt'
+TOTAL_ASSETS_EOY = './/{http://www.irs.gov/efile}TotalAssetsEOYAmt'
+TOTAL_LIABILITIES_BOY = './/{http://www.irs.gov/efile}TotalLiabilitiesBOYAmt'
+TOTAL_LIABILITIES_EOY = './/{http://www.irs.gov/efile}TotalLiabilitiesEOYAmt'
 
 # Predefined xml paths for interested elements for 990EZ form
 CY_TOTAL_REVENUE_EZ = './/{http://www.irs.gov/efile}TotalRevenueAmt'
 CY_CONTRIBUTIONS_EZ = './/{http://www.irs.gov/efile}ContributionsGiftsGrantsEtcAmt'
 CY_SERVICE_REV_EZ = './/{http://www.irs.gov/efile}ProgramServiceRevenueAmt'
 CY_INVESTMENT_INCOME_EZ = './/{http://www.irs.gov/efile}GrossInvestmentIncome509Grp'
-CY_GRANTS_PAID = './/{http://www.irs.gov/efile}GrantsAndAllocationsAmt'
+CY_TOTAL_EXPENSES_EZ = './/{http://www.irs.gov/efile}TotalExpensesAmt'
+CY_GRANTS_PAID_EZ = './/{http://www.irs.gov/efile}GrantsAndSimilarAmountsPaidAmt'
+CY_SALARIES_EZ = './/{http://www.irs.gov/efile}SalariesOtherCompEmplBnftAmt'
+CY_BENEFITS_EZ = './/{http://www.irs.gov/efile}BenefitsPaidToOrForMembersAmt'
+TOTAL_ASSETS_GRP_EZ = './/{http://www.irs.gov/efile}Form990TotalAssetsGrp'
+TOTAL_LIABILITIES_GRP_EZ = './/{http://www.irs.gov/efile}SumOfTotalLiabilitiesGrp'
 
 def parse_xml_form(url, form_type):
     tree = etree.ElementTree(file=urllib2.urlopen(url))
@@ -50,6 +67,20 @@ def get_990_fields(root):
     fields['py_contributions'] = get_field_abstract(root, PY_CONTRIBUTIONS)
     fields['cy_service_revenue'] = get_field_abstract(root, CY_SERVICE_REV)
     fields['py_service_revenue'] = get_field_abstract(root, PY_SERVICE_REV)
+    fields['cy_investment_income'] = get_field_abstract(root, CY_INVESTMENT_INCOME)
+    fields['py_investment_income'] = get_field_abstract(root, PY_INVESTMENT_INCOME)
+    fields['cy_total_expenses'] = get_field_abstract(root, CY_TOTAL_EXPENSES)
+    fields['py_total_expenses'] = get_field_abstract(root, PY_TOTAL_EXPENSES)
+    fields['cy_grants_paid'] = get_field_abstract(root, CY_GRANTS_PAID)
+    fields['py_grants_paid'] = get_field_abstract(root, PY_GRANTS_PAID)
+    fields['cy_salaries'] = get_field_abstract(root, CY_SALARIES)
+    fields['py_salaries'] = get_field_abstract(root, PY_SALARIES)
+    fields['cy_benefits'] = get_field_abstract(root, CY_BENEFITS)
+    fields['py_benefits'] = get_field_abstract(root, PY_BENEFITS)
+    fields['total_assets_boy'] = get_field_abstract(root, TOTAL_ASSETS_BOY)
+    fields['total_assets_eoy'] = get_field_abstract(root, TOTAL_ASSETS_EOY)
+    fields['total_liabilities_boy'] = get_field_abstract(root, TOTAL_LIABILITIES_BOY)
+    fields['total_liabilities_eoy'] = get_field_abstract(root, TOTAL_LIABILITIES_EOY)
     return fields
 
 def get_990ez_fields(root):
@@ -57,11 +88,27 @@ def get_990ez_fields(root):
     fields['cy_total_revenue'] = get_field_abstract(root, CY_TOTAL_REVENUE_EZ)
     fields['cy_contributions'] = get_field_abstract(root, CY_CONTRIBUTIONS_EZ)
     fields['cy_service_revenue'] = get_field_abstract(root, CY_SERVICE_REV_EZ)
+    fields['cy_investment_income'] = get_field_abstract(root, CY_INVESTMENT_INCOME_EZ)
+    fields['cy_total_expenses'] = get_field_abstract(root, CY_TOTAL_EXPENSES_EZ)
+    fields['cy_grants_paid'] = get_field_abstract(root, CY_GRANTS_PAID_EZ)
+    fields['cy_salaries'] = get_field_abstract(root, CY_SALARIES_EZ)
+    fields['cy_benefits'] = get_field_abstract(root, CY_BENEFITS_EZ)
+    fields['total_assets_boy'] = try_attribute(root, TOTAL_ASSETS_GRP_EZ, 0)
+    fields['total_assets_eoy'] = try_attribute(root, TOTAL_ASSETS_GRP_EZ, 1)
+    fields['total_liabilities_boy'] = try_attribute(root, TOTAL_LIABILITIES_GRP_EZ, 0)
+    fields['total_liabilities_eoy'] = try_attribute(root, TOTAL_LIABILITIES_GRP_EZ, 1)
     return fields
 
 def get_field_abstract(root, field):
     value = root.find(field)
     return value.text if value is not None else None
+
+def try_attribute(root, field, index):
+    try:
+        x = root.find(field).getchildren()[index].text
+    except Exception:
+        x = None
+    return x
 
 def get_organization_type(root):
     """This function will return the organization type.
