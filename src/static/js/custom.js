@@ -3,7 +3,7 @@ $(function() {
       $.getJSON($SCRIPT_ROOT + '/score', {
         key: $('input[name="key"]').val()
       }, function(data) {
-        $("#score").text(data.result);
+        $("#score").text(data.score);
       });
       return false;
     });
