@@ -1,5 +1,5 @@
 $(function() {
-    $('#query').submit(function() {
+    $('form#query').submit(function() {
       $.getJSON('/score', {key: $('input[name="key"]').val()}, function(data){
         console.log(data);
       });
