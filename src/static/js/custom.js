@@ -11,24 +11,25 @@ $(function() {
 
     $(query).submit(function(event) {
         event.preventDefault();
-        $('html, body').animate({
-             scrollTop: $("#results").offset().top
-        }, 2000);
-        // $.ajax({
-        //     url: '/score',
-        //     data: $(key).serialize(),
-        //     type: 'POST',
-        //     success: function(response) {
-        //     	var returnedData = JSON.parse(response);
-        //         $('#total_score').text("Score: " + returnedData.revenue_growth);
-        //         // var revenue_growth = returnedData.revenue_growth;
-        //         $('#results').show(1500);
-        //         console.log(response);	
-        //     },
-        //     error: function(error) {
-        //         console.log(error);
-        //     }
-        // });
+        $.ajax({
+            url: '/score',
+            data: $(key).serialize(),
+            type: 'POST',
+            success: function(response) {
+            	var returnedData = JSON.parse(response);
+                $('#total_score').text("Score: " + returnedData.revenue_growth);
+                // var revenue_growth = returnedData.revenue_growth;
+                $('#results').show(1500);
+                console.log(response);
+                // scroll to results
+                $('html, body').animate({
+                    scrollTop: $("#results").offset().top
+                }, 2000);	
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
     });
 });
 
