@@ -9,7 +9,8 @@ $(function() {
             data: $(key).serialize(),
             type: 'POST',
             success: function(response) {
-                console.log(response.revenue_growth);
+            	var returnedData = JSON.parse(response);
+                console.log(returedData.revenue_growth);
                 // $('#total_score').text(response.revenue_growth);
             },
             error: function(error) {
