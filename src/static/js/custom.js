@@ -2,12 +2,12 @@ $(function() {
 	var query = $('#query');
 	var key = $('#key');
 
-    $(query).bind('click', function(event) {
-        $('html, body').animate({
-             scrollTop: $("#results").offset().top
-        }, 2000);
-        return false;
-    });
+    // $(query).bind('click', function(event) {
+    //     $('html, body').animate({
+    //          scrollTop: $("#results").offset().top
+    //     }, 2000);
+    //     return false;
+    // });
 
     $(query).submit(function(event) {
         event.preventDefault();
