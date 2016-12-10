@@ -1,5 +1,6 @@
 .level-img-right > .container {
 margin-top: 0px;
+width: auto;
 }
 
 .glyphicon {
@@ -13,3 +14,7 @@ margin-top: 0px;
 .level-hero .heading {
 	color: #FFF;
 }
+
+a[id = "app" ]:target ~ #main article.panel {
+    -webkit-transform: translateY( 0px);
+    transform: translateY( 0px );
