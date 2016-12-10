@@ -12,7 +12,7 @@ def index():
 
 @app.route('/score', methods = ['POST'])
 def get_revenue_growth():
-    key = request.args.get('key')
+    key = request.args.get('formData')
     revenue_growth = mysql_client.query_revenue_growth(key)
     # if revenue_growth is None:
     #     return 'There is no organization with electronic id or name %s\n' % key
