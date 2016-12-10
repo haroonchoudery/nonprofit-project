@@ -11,7 +11,7 @@ $(function() {
             success: function(response) {
             	var returnedData = JSON.parse(response);
                 console.log(returnedData.revenue_growth);
-                // $('#total_score').text(response.revenue_growth);
+                $('#total_score').text(returnedData.revenue_growth);
             },
             error: function(error) {
                 console.log(error);
