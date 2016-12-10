@@ -24,7 +24,7 @@ def get_revenue_growth():
 
     key = request.args.get('key')
     revenue_growth = mysql_client.query_revenue_growth(key)
-    return key
+    return type(key)
     # return jsonify(revenue_growth=revenue_growth)
 
 @app.route('/ranking/<organization_type>/<limit>', methods = ['GET'])
