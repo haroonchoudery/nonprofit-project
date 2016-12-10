@@ -1,8 +1,8 @@
 $(function() {
 	var query = $('#query');
 	var key = $('input[name="key"]').val();
-	
-	$(form).submit(function(event) {
+
+	$(query).submit(function(event) {
     // Stop the browser from submitting the form.
     event.preventDefault();
 
