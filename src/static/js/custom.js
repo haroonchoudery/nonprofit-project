@@ -1,5 +1,5 @@
 $(function() {
-    $('a#calculate').bind('click', function() {
+    $('form#query').bind('click', function() {
       $.getJSON($SCRIPT_ROOT + '/score', {
         key: $('input[name="key"]').val()
       }, function(data) {
