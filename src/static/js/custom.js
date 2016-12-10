@@ -1,10 +1,10 @@
-$(function() {
-    $('#query').submit(function() {
-      $.getJSON('/score', {
-        key: $('input[name="key"]').val()
-      }, function(data) {
-        $("#score").text(data.key);
-      });
-      return false;
-    });
-  });
+// $(function() {
+//     $('#query').submit(function() {
+//       $.getJSON('/score', {
+//         key: $('input[name="key"]').val()
+//       }, function(data) {
+//         $("#score").text(data.key);
+//       });
+//       return false;
+//     });
+//   });
