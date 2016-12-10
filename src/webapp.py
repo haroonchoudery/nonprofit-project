@@ -27,7 +27,8 @@ def get_revenue_growth():
 
     revenue_growth = mysql_client.query_revenue_growth(key)
 
-    return json.dumps({'status':'OK', 'key':key, 'revenue_growth':revenue_growth});
+    # return json.dumps({'status':'OK', 'key':key, 'revenue_growth':revenue_growth});
+    return render_template('colors.html', revenue_growth=revenue_growth)
 
 @app.route('/ranking/<organization_type>/<limit>', methods = ['GET'])
 def get_revenue_growth_ranking(organization_type, limit):
