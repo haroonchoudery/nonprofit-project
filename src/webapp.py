@@ -28,7 +28,8 @@ def get_revenue_growth():
     if key.isdigit():
         key = int(key)
     else:
-    
+        key = key
+
     revenue_growth = mysql_client.query_revenue_growth(key)
     return json.dumps({'status':'OK', 'key':key, 'revenue_growth':revenue_growth});
 
