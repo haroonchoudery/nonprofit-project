@@ -10,7 +10,6 @@
 
 /* Custom CSS */
 .banner{
-	background-image: url("../img/nonprofit.jpg") !important;
 	background-position: 30% 50% !important;
 }
 
@@ -1099,7 +1098,7 @@ input.text:focus {
 @media ( min-width: 1200px ) {
 	.hero-home {
 		background-color: #5c6164;
-		background-image: url("../img/frame-1.jpg");
+		background-image: url("../img/nonprofit.jpg");
 	}
 
 }
