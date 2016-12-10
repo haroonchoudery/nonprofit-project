@@ -14,7 +14,6 @@ $(function() {
         $('html, body').animate({
              scrollTop: $("#results").offset().top
         }, 2000);
-        return false;
         $.ajax({
             url: '/score',
             data: $(key).serialize(),
