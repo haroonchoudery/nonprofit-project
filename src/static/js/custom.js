@@ -23,7 +23,7 @@ $(function() {
                     $('#error').show(1500);
                     console.log(response);
                     $('html, body').animate({
-                        scrollTop: $("#results").offset().top
+                        scrollTop: $("#notfound").offset().top
                     }, 2000);
                 }
                 else {
