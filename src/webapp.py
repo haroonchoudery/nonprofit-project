@@ -24,14 +24,14 @@ def get_score():
     if results is None:
         return json.dumps({'status':'OK', 'key':key, 'name':None})
     else:
-        name, credit_score, total_assets, total_revenues, net_assests = results
+        name, credit_score, total_assets, total_revenues, net_assets = results
         return json.dumps({'status':'OK',
                            'key':key,
                            'name': name,
                            'score':credit_score,
                            'total_assets':total_assets,
                            'total_revenues':total_revenues,
-                           'net_assests':net_assests})
+                           'net_assets':net_assets})
 
 @app.route('/id/<id>', methods = ['GET'])
 def get_id(id):
