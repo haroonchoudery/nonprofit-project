@@ -145,13 +145,9 @@ class DBClient(object):
             cursor.close()
             cnx.close()
 
-    def query_revenue_growth(self, key):
+    def get_credit_score(self, key):
         id_result = self.query_by_id(key)
-        if id_result:
-            return id_result[10]
-
-        name_result = self.query_by_name(key)
-        if name_result:
-            return name_result[10]
-
-        return None
+        if id_result is None or len(id_result) == 0:
+            return None
+        else:
+            return id_result[-1]
