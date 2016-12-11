@@ -83,7 +83,7 @@ class DBClient(object):
             query = 'SELECT * FROM ' + VIEW + \
                     ' WHERE organization_name = %s'
             cursor.execute(query, (organization_name,))
-            result = cursor.fetchall()[0]
+            result = cursor.fetchall()
             if result is None or len(result) == 0:
                 return None
             else:
