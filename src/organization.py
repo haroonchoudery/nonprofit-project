@@ -115,11 +115,40 @@ class Organization(dict):
                                               and self['net_assets_eoy'] > 0) else None)
         
     def _set_credit_score(self):
+        
+        """
+        We generate a raw score equal to the sum of 8 financial ratio scores, each in the range [-2, 2].
+        There is an additional +/- 0.5 raw score modifier depending on whether revenue growth was
+        higher/lower than expense growth respectively (only applies to Form 990, not 990EZ).
+        The coefficients for the ratios were determined by sampling 2,000 forms to get a sense of
+        the distribution of each ratio. In general, the [-2, 2] ratio score should be ~1 on average
+        and only negative for clearly bad results (e.g., negative asset growth, very high debt, etc.)
+        If the sum across all ratios is exactly 0, we assume the form did not have sufficient information,
+        so we do not assign a credit score. Otherwise, we accept the raw score and convert it to a credit score
+        (if some fields are missing, that ratio score will be 0). There is roughly a 10% incidence rate of
+        missing credit scores.
+        
+        The 8 ratios are:
+        Operating reserve = (Net assets) / (Total expenses)
+        Growth in net assets = (Ending net assets - Beginning net assets) / (Beginning net assets) - 1
+        Operating efficiency = (Total revenue) / (Total assets)
+        Net margin = (Total revenue - Total expenses) / (Total revenue)
+        Growth in total assets = (Ending total assets - Beginning total assets) / (Beginning total assets) - 1
+        Leverage efficiency = (Total revenue) / (Net assets)
+        Debt ratio = (Total liabilities) / (Total assets)
+        Financial leverage = (Total liabilities) / (Net assets)
+        
+        The conversion from raw score to credit score is a logistic function with a slope coefficient of 0.25.
+        The credit score ranges from 300 to 850 to look like a FICO score, and it has a similar distribution
+        to personal FICO scores (a sample of 900 nonprofit organizations yielded an average score of 703
+        with a range of [392, 816] and standard deviation of 106).
+        """
+        
         cs = 0
         cs += min(max(self.float_or_zero(self['cy_operating_reserve']) * 0.4, -2), 2)
         cs += min(max(self.float_or_zero(self['annual_net_assets_growth']) * 20, -2), 2)
         cs += min(max(self.float_or_zero(self['cy_operating_efficiency']), -2), 2)
-        cs += min(max(self.float_or_zero(self['cy_revenue_less_expenses']) * 20, -2), 2)
+        cs += min(max(self.float_or_zero(self['cy_net_margin']) * 20, -2), 2)
         cs += min(max(self.float_or_zero(self['annual_total_assets_growth']) * 20, -2), 2)
         cs += min(max(self.float_or_zero(self['cy_leverage_efficiency']), -2), 2)
         cs += min(max(self.float_or_zero(self['cy_debt_ratio']) * -4 + 2, -2), 2)
@@ -129,7 +158,7 @@ class Organization(dict):
                 cs += 0.5
             elif self['annual_total_revenue_growth'] < self['annual_total_expense_growth']:
                 cs -= 0.5
-        score = 300 + 550 / (1 + math.exp(-0.2 * cs))
+        score = 300 + 550 / (1 + math.exp(-0.25 * cs))
         if cs == 0:
             self['cy_credit_score'] = None
         else:
