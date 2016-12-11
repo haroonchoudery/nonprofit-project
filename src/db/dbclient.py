@@ -36,7 +36,7 @@ class DBClient(object):
         self.cnxpool = MySQLConnectionPool(pool_reset_session=False, **dbconfig)
 
     def upsert(self, org):
-        """ Insert an existing item if it doesn't exist, update it otherwise."""
+        """Insert an existing item if it doesn't exist, update it otherwise."""
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:
@@ -94,6 +94,7 @@ class DBClient(object):
         finally:
             cursor.close()
             cnx.close()
+
     def query_by_id(self, electronic_id):
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
@@ -145,9 +146,12 @@ class DBClient(object):
             cursor.close()
             cnx.close()
 
-    def get_credit_score(self, key):
+    def get_significant_fields(self, key):
+        """Return the significant data in the credit report."""
         id_result = self.query_by_id(key)
         if id_result is None or len(id_result) == 0:
             return None
-        else:
-            return id_result[-1]
+
+        name = id_result[3]
+        credit_score = 'Unavailable' if id_result[38] is None else id_result[38]
+        return name, credit_score
