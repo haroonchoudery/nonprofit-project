@@ -1,3 +1,7 @@
+import sys
+import os
+import logging
+from logging import config
 from functools import wraps
 from mysql.connector.pooling import MySQLConnectionPool
 
@@ -31,9 +35,14 @@ class DBClient(object):
         'password': PASSWORD
     }
 
+    config_file = os.path.join(os.environ['CONFROOT'], 'log.conf')
+    logging.config.fileConfig(config_file)
+
     def __init__(self):
         dbconfig = DBClient.dbconfig
         self.cnxpool = MySQLConnectionPool(pool_reset_session=False, **dbconfig)
+        self.logger = logging.getLogger('DB')
+
 
     def upsert(self, org):
         """Insert an existing item if it doesn't exist, update it otherwise."""
@@ -90,7 +99,8 @@ class DBClient(object):
                           )
             cnx.commit()
         except Exception, error:
-            print error
+            self.logger.error('Fail to upsert organization %s', org['electronic_id'])
+            self.logger.exception(error)
         finally:
             cursor.close()
             cnx.close()
@@ -108,7 +118,8 @@ class DBClient(object):
             else:
                 return result[0]
         except Exception, error:
-            print error
+            self.logger.error('Fail to query organization %s', org['electronic_id'])
+            self.logger.exception(error)
         finally:
             cursor.close()
             cnx.close()
@@ -126,7 +137,8 @@ class DBClient(object):
             else:
                 return result[0]
         except Exception, error:
-            print error
+            self.logger.error('Fail to query organization %s', org['electronic_id'])
+            self.logger.exception(error)
         finally:
             cursor.close()
             cnx.close()

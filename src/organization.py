@@ -99,6 +99,7 @@ class Organization(dict):
     def _set_ratios(self):
         self['cy_operating_reserve'] = (self['net_assets_eoy'] / self['cy_total_expenses']
                                         if self['cy_total_expenses'] not in [0, None] else None)
+        self['cy_operating_reserve'] = round(self['cy_operating_reserve'], 2)
         self['cy_operating_efficiency'] = (self['cy_total_revenue'] / self['cy_total_assets']
                                            if self['cy_total_revenue'] is not None
                                            and (self['cy_total_assets'] not in [0, None]
