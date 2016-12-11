@@ -149,5 +149,7 @@ class DBClient(object):
         id_result = self.query_by_id(key)
         if id_result is None or len(id_result) == 0:
             return None
+        elif id_result[-1] is None:
+            return 'Unavailable'
         else:
             return id_result[-1]

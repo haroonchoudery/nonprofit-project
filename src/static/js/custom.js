@@ -2,13 +2,6 @@ $(function() {
 	var query = $('#query');
 	var key = $('#key');
 
-    // $(query).bind('click', function(event) {
-    //     $('html, body').animate({
-    //          scrollTop: $("#results").offset().top
-    //     }, 2000);
-    //     return false;
-    // });
-
     $(query).submit(function(event) {
         event.preventDefault();
         $.ajax({
@@ -28,7 +21,6 @@ $(function() {
                 }
                 else {
                     $('#total_score').text("Score: " + returnedData.score);
-                    // var revenue_growth = returnedData.revenue_growth;
                     $('#results').show(1500);
                     console.log(response);
                     // scroll to results
