@@ -23,7 +23,7 @@ def get_score():
 
     score = mysql_client.get_credit_score(key)
 
-    return json.dumps({'status':'OK', 'key':key, 'revenue_growth':score});
+    return json.dumps({'status':'OK', 'key':key, 'score':score});
 
 @app.route('/id/<id>', methods = ['GET'])
 def get_id(id):

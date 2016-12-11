@@ -19,7 +19,7 @@ $(function() {
                 $('#error').hide();
                 $('#results').hide();
             	var returnedData = JSON.parse(response);
-                if(returnedData.revenue_growth == null){
+                if(returnedData.score == null){
                     $('#error').show(1500);
                     console.log(response);
                     $('html, body').animate({
@@ -27,7 +27,7 @@ $(function() {
                     }, 2000);
                 }
                 else {
-                    $('#total_score').text("Score: " + returnedData.revenue_growth);
+                    $('#total_score').text("Score: " + returnedData.score);
                     // var revenue_growth = returnedData.revenue_growth;
                     $('#results').show(1500);
                     console.log(response);
