@@ -1,10 +1,5 @@
 /*
-I remove the tax_year because we agree that we are only going to look at
-the most recent tax form, so we do not need the tax year to query a
-organization. I also extend the schema to include the new added items.
-
-Alex: I am adding back the tax year even though it might not be important to the scope of this particular application. The table should be robust for the business use and we should be able to handle multiple tax years for a single organization. I am creating views to handle the front end queries so this should be transparent (the view will only contain the most recent data).
-
+This script will construct the mysql database.
 */
 
 # Create the database
@@ -52,6 +47,7 @@ CREATE TABLE IF NOT EXISTS tax_exempt_organizations (
   cy_debt_ratio FLOAT(4,2),
   cy_financial_leverage FLOAT(4,2),
   cy_credit_score INT,
+  cy_credit_score_percentile FLOAT(4,2),
   PRIMARY KEY (electronic_id, tax_year)
 );
 
@@ -60,7 +56,6 @@ CREATE OR REPLACE VIEW max_years as (
   FROM tax_exempt_organizations
   GROUP BY electronic_id
 );
-
 
 CREATE OR REPLACE VIEW tax_exempt_organizations_current AS (
   select teo.*
