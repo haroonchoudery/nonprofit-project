@@ -22,7 +22,7 @@ COLUMNS = (
           'annual_total_liabilities_growth, annual_net_assets_growth, cy_operating_reserve, ' \
           'cy_operating_efficiency, cy_net_margin, cy_leverage_efficiency, cy_debt_ratio, ' \
           'cy_financial_leverage, cy_credit_score)'
-          )
+)
 
 class DBClient(object):
 
@@ -43,9 +43,8 @@ class DBClient(object):
         self.cnxpool = MySQLConnectionPool(pool_reset_session=False, **dbconfig)
         self.logger = logging.getLogger('DB')
 
-
     def upsert(self, org):
-        """Insert an existing item if it doesn't exist, update it otherwise."""
+        """Insert an organization object if it doesn't exist, update it otherwise."""
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:
@@ -109,8 +108,7 @@ class DBClient(object):
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:
-            query = 'SELECT * FROM ' + VIEW + \
-                    ' WHERE electronic_id = %s'
+            query = 'SELECT * FROM ' + VIEW + ' WHERE electronic_id = %s'
             cursor.execute(query, (electronic_id,))
             result = cursor.fetchall()
             if result is None or len(result) == 0:
@@ -128,8 +126,7 @@ class DBClient(object):
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:
-            query = 'SELECT * FROM ' + VIEW + \
-                    ' WHERE organization_name = %s'
+            query = 'SELECT * FROM ' + VIEW + ' WHERE organization_name = %s'
             cursor.execute(query, (organization_name,))
             result = cursor.fetchall()
             if result is None or len(result) == 0:
@@ -158,8 +155,23 @@ class DBClient(object):
             cursor.close()
             cnx.close()
 
+    def update_score_percentile(self, score, electronic_id):
+        """Update an existing organization with the given credit score percentile."""
+        cnx = self.cnxpool.get_connection()
+        cursor = cnx.cursor()
+        try:
+            update_existing_record = 'UPDATE ' + DML_TABLE + ' SET cy_credit_score_percentile=%s WHERE ELECTRONIC_ID = %s'
+            cursor.execute(update_existing_record, (score, electronic_id))
+            cnx.commit()
+        except Exception, error:
+            self.logger.error('Fail to update organization %s', electronic_id)
+            self.logger.exception(error)
+        finally:
+            cursor.close()
+            cnx.close()
+
     def get_significant_fields(self, key):
-        """Return the significant fields for the credit report."""
+        """Return key metrics which should show up in the credit report."""
         id_result = self.query_by_id(key)
         if id_result is None or len(id_result) == 0:
             return None
