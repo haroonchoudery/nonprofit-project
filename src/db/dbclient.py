@@ -65,8 +65,11 @@ class DBClient(object):
             query = 'SELECT * FROM ' + VIEW + \
                     ' WHERE electronic_id = %s'
             cursor.execute(query, (electronic_id,))
-            result = cursor.fetchall()[0]
-            return result
+            result = cursor.fetchall()
+            if result is None or len(result) == 0:
+                return None
+            else:
+                return result[0]
         except Exception, error:
             print error
         finally:
@@ -80,8 +83,11 @@ class DBClient(object):
             query = 'SELECT * FROM ' + VIEW + \
                     ' WHERE organization_name = %s'
             cursor.execute(query, (organization_name,))
-            result = cursor.fetchone()[0]
-            return result
+            result = cursor.fetchall()[0]
+            if result is None or len(result) == 0:
+                return None
+            else:
+                return result[0]
         except Exception, error:
             print error
         finally:
