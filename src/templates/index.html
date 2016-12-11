@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!--[if lte IE 9]><html class="no-js is-ie"><![endif]-->
+<!--[if gt IE 8]><!--><html class=no-js><!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="Paving the Way For A More Transparent Nonprofit Sector">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	
+
+	<title>Nonprofit Credit Score -- Free Financial Breakdown for Nonprofit Organizations</title>
+	<link rel=stylesheet href="../static/css/main.css">
+	<link rel=stylesheet href="../static/css/custom.css">
+	<!--[if lte IE 8]>
+	<link rel=stylesheet href="css/ie.css">
+	<![endif]-->
+		<script src="../static/js/vendor/modernizr.js"></script>
+
+		<script src="../static/js/vendor/respond.min.js"></script>
+
+		<script type="text/javascript">
+			var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		</script>
+
+</head>
+
+<body>
+
+	<div class="level level-hero hero-home has-hint">
+		
+
+		<div class="hero-overlay visible-lg banner"></div>
+
+<!-- 		<video loop id=bg-video class=fullscreen-video>
+			<source src="http://alvarez.is/bt/appi.webm" type="video/webm">
+			<source src="http://alvarez.is/bt/appi.mp4" type="video/mp4">
+
+		</video> -->
+
+		<div class="container full-height">
+			<div class=v-align-parent>
+				<div class=v-center>
+					<div class="row">
+						<div class="col-xs-10 col-sm-6">
+							<h1 class="mb-10 heading">Nonprofit<span>Credit Score</span></h1>
+							<div class="subheading mb-20">Free Financial Breakdown<br>for Nonprofit Organizations</div>
+						</div>
+					</div>
+					<div>
+						<a href="#app" class="page-scroll btn btn-lg btn-default btn-banner"><span class="glyphicon glyphicon-search"></span> Search Now</a>
+						<a href="#mission" class="page-scroll btn btn-lg btn-default btn-banner"><span class="glyphicon glyphicon-book"></span> Learn More</a>
+					</div>
+				</div>
+			</div>
+
+			<div class=hint-arrow></div>
+		</div>
+	</div>
+
+	<div id="app" class=level>
+		<div class="container mb-100 xs-mb-40">
+			<div class=row>
+				<div class="col-sm-5 col-md-4 col-md-offset-1 col-sm-offset-1">
+					<h1 class="mb-10 xs-mb-10 heading color-dark heading-bordered">Nonprofit<br>Search</h1>
+				</div>
+				<div class="col-sm-5 col-sm-offset-1 col-md-offset-2">
+					<h2 class="w-300 color-dark mb-10 xs-mb-10">Search By</h2>
+					<ul class="v-center text-left bullets">
+						<li>Organization ID</li>
+						<li>Organization Name</li>
+						<li>Organization Type</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+<!-- Search Bar Code -->
+		<div class="container mb-100 xs-mb-40">
+			<div class="row">
+		        <div class="col-sm-5 col-sm-offset-3 col-md-8 col-md-offset-2">
+		            <div id="custom-search-input">
+		                <form id="query" class="input-group col-md-12" action="/score" method="GET">
+		                    <input name="key" id="key" type="text" class="form-control input-lg" placeholder="Enter Nonprofit ID" />
+		                    <span class="input-group-btn">
+		                        <button class="btn btn-info btn-lg" type="submit">
+		                            <i class="glyphicon glyphicon-search"></i>
+		                        </button>
+		                    </span>
+		                </form>
+		            </div>
+		        </div>
+			</div>
+		</div>
+<!-- End Search Bar Code -->
+
+		<div id="results" style="display: none;">
+{% include 'score.html' %}
+		</div>
+
+	</div>
+
+
+
+	<div id="mission" class="level level-img-right">
+
+		<div class="container xs-mb-30">
+			<img class="img-right-sprite"  src="../static/img/girl.jpg" alt>
+			<div class="row mb-60 xs-mb-20">
+				<div class="col-sm-6 col-lg-offset-1 col-lg-5">
+					<h1 class="mb-20 xs-mb-10 heading color-dark heading-bordered xl-heading-outdent">Our Goal</h1>
+					<h2 class="w-300 color-dark mb-10">To add transparency to the nonprofit sector</h2>
+				</div>
+				<div class="col-sm-6 col-lg-offset-1 col-lg-5">
+
+				</div>
+			</div>
+
+
+			<div class="row mb-60 xs-mb-20">
+				<div class="col-sm-1 col-lg-offset-1">
+					<i class="icon icon-globe"></i>
+				</div>
+				<div class="col-sm-4 col-md-3">
+					<h3 class="mb-15">Worldwide</h3>
+					<p class="smaller xs-mw">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+				</div>
+			</div>
+
+			<div class="row mb-60 xs-mb-20">
+				<div class="col-sm-1 col-lg-offset-1">
+					<i class="icon icon-eye"></i>
+				</div>
+				<div class="col-sm-4 col-md-3">
+					<h3 class="mb-15">Privacy</h3>
+					<p class="smaller xs-mw">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-1 col-lg-offset-1">
+					<i class="icon icon-bubble"></i>
+				</div>
+				<div class="col-sm-4 col-md-3">
+					<h3 class="mb-15">Social Integration</h3>
+					<p class="smaller xs-mw">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+	</div>
+	<div class="footer text-center">
+	<p class="fmenu">
+		<a href="index.html">HOME</a> | <a href="about.html">ABOUT</a>
+	</p>
+	<p>Made in SF by <a href="http://haroonchoudery.com/">Haroon Choudery</a>, <a href="https://www.linkedin.com/in/lingyi-jerry-song-2836ba42">Jerry Song</a>, and <a href="https://www.ischool.berkeley.edu/people/alex-nocella">Alex Nocella</a></p>
+
+	</div>	
+
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="../static/js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
+
+	<script src="../static/js/bootstrap.min.js"></script>
+	<script src="../static/js/dropdown.js"></script>
+	<script src="../static/js/main.js"></script>
+	<script src="../static/js/custom.js"></script>
+	<script src="../static/js/jquery.easing.1.3.js"></script>
+
+	<!-- //-end- concat_js -->
+
+
+	
+
+</body>
+</html>

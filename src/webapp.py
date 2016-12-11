@@ -1,17 +1,29 @@
 from db.dbclient import DBClient
 from flask import Flask
+from flask import render_template
+from flask import request
+from flask import jsonify
+import json
 
 mysql_client = DBClient()
 app = Flask(__name__)
 
-@app.route('/growth/<key>', methods = ['GET'])
-def get_revenue_growth(key):
-    revenue_growth = mysql_client.query_revenue_growth(key)
-    if revenue_growth is None:
-        return 'There is no organization with electronic id or name %s\n' % key
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/score', methods = ['POST'])
+def get_revenue_growth():
+    
+    key = request.form['key']
+    if key.isdigit():
+        key = int(key)
     else:
-        return 'The annual growth of the organization with electronic id or name %s is %s\n' \
-               % (key, revenue_growth)
+        key = key
+
+    revenue_growth = mysql_client.query_revenue_growth(key)
+
+    return json.dumps({'status':'OK', 'key':key, 'revenue_growth':revenue_growth});
 
 @app.route('/ranking/<organization_type>/<limit>', methods = ['GET'])
 def get_revenue_growth_ranking(organization_type, limit):

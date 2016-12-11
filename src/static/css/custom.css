@@ -1,0 +1,47 @@
+h1#total_score {
+	color: #2196F3;
+}
+
+.level-img-right > .container {
+margin-top: 0px;
+width: auto;
+}
+
+.img-right-sprite {
+	height: auto;
+}
+
+.glyphicon {
+	color: #2196F3;
+}
+
+.level-hero .subheading {
+	color: #FFF;
+}
+
+.level-hero .heading {
+	color: #FFF;
+}
+
+#app.level {
+	padding: 8.364rem 0 12.273rem;
+}
+
+.metric{
+    padding: 30px;
+}
+
+@media ( max-width: 767px ) {
+	.bullets {
+		padding-top: 40px;
+		padding-bottom: 20px;
+  		position: relative;
+  		left: 50%;
+	}
+}
+
+@media ( min-width: 768px ) and ( max-width: 1380px ) {
+	html {
+	    font-size: inherit;
+	}
+}
