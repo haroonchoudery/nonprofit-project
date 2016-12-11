@@ -17,9 +17,14 @@ $(function() {
             type: 'POST',
             success: function(response) {
             	var returnedData = JSON.parse(response);
+                $('#error').hide(1500);
+                $('#results').hide(1500);
                 if(returnedData.revenue_growth == null){
                     $('#error').show(1500);
                     console.log(response);
+                    $('html, body').animate({
+                        scrollTop: $("#results").offset().top
+                    }, 2000);   
                 }
                 else {
                     $('#total_score').text("Score: " + returnedData.revenue_growth);
