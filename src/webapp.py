@@ -21,9 +21,9 @@ def get_revenue_growth():
     else:
         key = key
 
-    revenue_growth = mysql_client.query_revenue_growth(key)
+    score = mysql_client.query_revenue_growth(key)
 
-    return json.dumps({'status':'OK', 'key':key, 'revenue_growth':revenue_growth});
+    return json.dumps({'status':'OK', 'key':key, 'score':score});
 
 @app.route('/ranking/<organization_type>/<limit>', methods = ['GET'])
 def get_revenue_growth_ranking(organization_type, limit):
