@@ -24,7 +24,7 @@ $(function() {
                     $('#total_score').text("Score: " + returnedData.score);
                     $('#total_assets').text("Total Assets: $" + returnedData.total_assets);
                     $('#total_revenues').text("Total Revenues: $" + returnedData.total_revenues);
-                    $('#net_assests').text("Net Assests: $" + returnedData.net_assests);
+                    $('#net_assets').text("Net Assets: $" + returnedData.net_assets);
                     $('#results').show(1500);
                     console.log(response);
                     // scroll to results
