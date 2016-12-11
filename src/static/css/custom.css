@@ -1,3 +1,7 @@
+.heading-bordered-indent {
+	padding-left: 50px;
+}
+
 h1#total_score {
 	color: #2196F3;
 }

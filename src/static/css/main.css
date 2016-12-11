@@ -932,16 +932,15 @@ input.text:focus {
 }
 
 .fmenu {
-	font-size: 22px;
-	font-weight: 700;
+	font-size: 14px;
+	font-weight: 200;
 }
 
 .fmenu a {
-	color: #2f2f2f
+	color: #2196F3
 }
 
 .footer a {
-	text-decoration: underline;
 	margin: 0 .3rem;
 }
 
