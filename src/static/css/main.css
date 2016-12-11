@@ -1168,7 +1168,9 @@ input.text:focus {
 	.level-img-right {
 		padding: 0;
 	}
+}
 
+@media ( min-width: 976px ) {
 	.level-img-right > .container {
 		position: relative;
 		margin-top: 2.727rem;
@@ -1179,6 +1181,7 @@ input.text:focus {
 		
 	}
 }
+
 
 .level-img-right {
 	padding-bottom: 0;

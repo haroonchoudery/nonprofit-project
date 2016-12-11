@@ -1,3 +1,46 @@
+@font-face {
+font-family: 'ProximaNovaBold';
+src: url("../fonts/Proxima-Nova-Bold.otf") format("opentype");
+}
+
+@font-face {
+font-family: 'ProximaNova';
+src: url("../fonts/ProximaNova-Regular.otf") format("opentype");
+}
+
+@font-face {
+font-family: 'GraublauWeb';
+font-weight: bold;
+src: url("../fonts/lmroman10-regular.otf") format("opentype");
+}
+
+*{
+	font-family: 'ProximaNova';
+}
+
+
+@media (max-width: 972px){
+	.mission-text{
+		width: auto;
+	}
+}
+
+
+
+
+h1 br{
+		font-family: 'ProximaNovaBold';
+}
+
+p{
+	font-family: 'GraublauWeb';
+}
+
+.container.xs-mb-30.mission-description{
+	padding-bottom: 0px;
+}
+
+
 .heading-bordered-indent {
 	padding-left: 50px;
 }
@@ -20,10 +63,17 @@ width: auto;
 }
 
 .level-hero .subheading {
+	font-family: 'ProximaNova';
 	color: #FFF;
 }
 
 .level-hero .heading {
+	font-family: 'ProximaNovaBold';
+	color: #FFF;
+}
+
+.level-hero .heading span {
+	font-family: 'ProximaNovaBold';
 	color: #FFF;
 }
 
