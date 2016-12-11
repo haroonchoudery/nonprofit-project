@@ -24,7 +24,7 @@ $(function() {
                     console.log(response);
                     $('html, body').animate({
                         scrollTop: $("#results").offset().top
-                    }, 2000);   
+                    }, 2000);
                 }
                 else {
                     $('#total_score').text("Score: " + returnedData.revenue_growth);
@@ -34,7 +34,7 @@ $(function() {
                     // scroll to results
                     $('html, body').animate({
                         scrollTop: $("#results").offset().top
-                    }, 2000);   
+                    }, 2000);
                 }
             },
             error: function(error) {
