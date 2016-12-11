@@ -24,21 +24,20 @@ def get_score():
     if results is None:
         return json.dumps({'status':'OK', 'key':key, 'name':None})
     else:
-        name, credit_score = results
+        name, credit_score, total_assets, total_revenues, net_assests = results
         return json.dumps({'status':'OK',
                            'key':key,
                            'name': name,
-                           'score':credit_score})
+                           'score':credit_score,
+                           'total_assets':total_assets,
+                           'total_revenues':total_revenues,
+                           'net_assests':net_assests})
 
 @app.route('/id/<id>', methods = ['GET'])
 def get_id(id):
     # This method is for debug only. Should be removed in the final version.
     results = mysql_client.get_significant_fields(id)
-    if results is None:
-        return 'None\n'
-
-    name, credit_score = results
-    return str(credit_score) + '\n'
+    return str(results) + '\n'
 
 @app.route('/status', methods = ['GET'])
 def get_status():

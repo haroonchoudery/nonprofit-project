@@ -7,7 +7,7 @@ import parser.jsonparser as jsonparser
 from db.dbclient import DBClient
 
 # The number of objects to process in the source index file
-LIMIT = 1000
+LIMIT = 20
 
 # This points to the most recent electronic 990 filing index hosted by Amazon
 data_source_dict = {
