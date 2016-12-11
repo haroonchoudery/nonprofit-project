@@ -21,7 +21,7 @@ $(function() {
                     $('#error').show(1500);
                     console.log(response);
                 }
-                else(){
+                else {
                     $('#total_score').text("Score: " + returnedData.revenue_growth);
                     // var revenue_growth = returnedData.revenue_growth;
                     $('#results').show(1500);
