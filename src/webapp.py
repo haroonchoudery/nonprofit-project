@@ -14,22 +14,31 @@ def index():
 
 @app.route('/score', methods = ['POST'])
 def get_score():
-
     key = request.form['key']
     if key.isdigit():
         key = int(key)
     else:
         key = key
 
-    score = mysql_client.get_credit_score(key)
-
-    return json.dumps({'status':'OK', 'key':key, 'score':score});
+    results = mysql_client.get_significant_fields(key)
+    if results is None:
+        return json.dumps({'status':'OK', 'key':key, 'name':None})
+    else:
+        name, credit_score = results
+        return json.dumps({'status':'OK',
+                           'key':key,
+                           'name': name,
+                           'score':credit_score})
 
 @app.route('/id/<id>', methods = ['GET'])
 def get_id(id):
     # This method is for debug only. Should be removed in the final version.
-    result = mysql_client.get_credit_score(id)
-    return str(result) + '\n'
+    results = mysql_client.get_significant_fields(id)
+    if results is None:
+        return 'None\n'
+
+    name, credit_score = results
+    return str(credit_score) + '\n'
 
 @app.route('/status', methods = ['GET'])
 def get_status():

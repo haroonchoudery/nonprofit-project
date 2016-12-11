@@ -12,7 +12,7 @@ $(function() {
                 $('#error').hide();
                 $('#results').hide();
             	var returnedData = JSON.parse(response);
-                if(returnedData.score == null){
+                if(returnedData.name == null){
                     $('#error').show(1500);
                     console.log(response);
                     $('html, body').animate({
@@ -20,6 +20,7 @@ $(function() {
                     }, 2000);
                 }
                 else {
+                    $('#name').text("Organization Name: " + returnedData.name);
                     $('#total_score').text("Score: " + returnedData.score);
                     $('#results').show(1500);
                     console.log(response);
