@@ -11,13 +11,13 @@ $(function() {
 
     $(query).submit(function(event) {
         event.preventDefault();
+        event.('#error').hide();
+        event.('#results').hide();
         $.ajax({
             url: '/score',
             data: $(key).serialize(),
             type: 'POST',
             success: function(response) {
-                $('#error').hide();
-                $('#results').hide();
             	var returnedData = JSON.parse(response);
                 if(returnedData.revenue_growth == null){
                     $('#error').show(1500);
