@@ -13,26 +13,23 @@ def index():
     return render_template('index.html')
 
 @app.route('/score', methods = ['POST'])
-def get_revenue_growth():
-    
+def get_score():
+
     key = request.form['key']
     if key.isdigit():
         key = int(key)
     else:
         key = key
 
-    score = mysql_client.query_revenue_growth(key)
+    score = mysql_client.get_credit_score(key)
 
-    return json.dumps({'status':'OK', 'key':key, 'score':score});
+    return json.dumps({'status':'OK', 'key':key, 'revenue_growth':score});
 
-@app.route('/ranking/<organization_type>/<limit>', methods = ['GET'])
-def get_revenue_growth_ranking(organization_type, limit):
-    revenue_growth_ranking = mysql_client.query_by_type(organization_type, int(limit))
-    if len(revenue_growth_ranking) == 0:
-        return 'There is no organization type %s\n' % organization_type
-    else:
-        return 'The annual growth ranking of organization type %s is %s\n' \
-               % (organization_type, revenue_growth_ranking)
+@app.route('/id/<id>', methods = ['GET'])
+def get_id(id):
+    # This method is for debug only. Should be removed in the final version.
+    result = mysql_client.get_credit_score(id)
+    return str(result) + '\n'
 
 @app.route('/status', methods = ['GET'])
 def get_status():
