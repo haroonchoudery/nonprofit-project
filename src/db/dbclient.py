@@ -147,11 +147,14 @@ class DBClient(object):
             cnx.close()
 
     def get_significant_fields(self, key):
-        """Return the significant data in the credit report."""
+        """Return the significant fields for the credit report."""
         id_result = self.query_by_id(key)
         if id_result is None or len(id_result) == 0:
             return None
 
         name = id_result[3]
         credit_score = 'Unavailable' if id_result[38] is None else id_result[38]
-        return name, credit_score
+        total_assets = 'Unavailable' if id_result[22] is None else id_result[22]
+        total_revenues = 'Unavailable' if id_result[5] is None else id_result[5]
+        net_assests = 'Unavailable' if id_result[26] is None else id_result[26]
+        return name, credit_score, total_assets, total_revenues, net_assests

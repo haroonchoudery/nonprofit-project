@@ -22,6 +22,9 @@ $(function() {
                 else {
                     $('#name').text("Organization Name: " + returnedData.name);
                     $('#total_score').text("Score: " + returnedData.score);
+                    $('#total_assets').text("Total Assets: $" + returnedData.total_assets);
+                    $('#total_revenues').text("Total Revenues: $" + returnedData.total_revenues);
+                    $('#net_assests').text("Net Assests: $" + returnedData.net_assests);
                     $('#results').show(1500);
                     console.log(response);
                     // scroll to results
