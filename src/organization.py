@@ -1,3 +1,5 @@
+import math
+
 class Organization(dict):
 
     """This class represents an object of a tax exempt organization"""
@@ -17,7 +19,7 @@ class Organization(dict):
                               'cy_grants_paid', 'py_grants_paid',
                               'cy_salaries', 'py_salaries',
                               'cy_benefits', 'py_benefits',
-                              'total_assets_boy', 'total_assets_eoy'
+                              'total_assets_boy', 'total_assets_eoy',
                               'total_liabilities_boy', 'total_liabilities_eoy'
                              ]
         for field_key in numeric_field_keys:
@@ -42,6 +44,8 @@ class Organization(dict):
                               'annual_total_liabilities_growth')
         self._set_growth_rate(self['net_assets_eoy'], self['net_assets_boy'],
                               'annual_net_assets_growth')
+        self._set_ratios()
+        self._set_credit_score()
 
     def _set_other_revenue(self):
         if self['cy_total_revenue'] is not None:
@@ -85,6 +89,51 @@ class Organization(dict):
     def _set_net_assets(self):
         self['net_assets_boy'] = self.int_or_zero(self['total_assets_boy']) - self.int_or_zero(self['total_liabilities_boy'])
         self['net_assets_eoy'] = self.int_or_zero(self['total_assets_eoy']) - self.int_or_zero(self['total_liabilities_eoy'])
+        
+    def _set_ratios(self):
+        self['cy_operating_reserve'] = (self['net_assets_eoy'] / self['cy_total_expenses']
+                                        if self['cy_total_expenses'] not in [0, None] else None)
+        self['cy_operating_efficiency'] = (self['cy_total_revenue'] / self['cy_total_assets']
+                                           if self['cy_total_revenue'] is not None
+                                           and (self['cy_total_assets'] not in [0, None]
+                                                and self['cy_total_assets'] > 0) else None)
+        self['cy_net_margin'] = (self['cy_revenue_less_expenses'] / self['cy_total_revenue']
+                                 if self['cy_revenue_less_expenses'] is not None
+                                 and (self['cy_total_revenue'] not in [0, None]
+                                      and self['cy_total_revenue'] > 0) else None)
+        self['cy_leverage_efficiency'] = (self['cy_total_revenue'] / self['net_assets_eoy']
+                                          if self['cy_total_revenue'] is not None
+                                          and (self['net_assets_eoy'] not in [0, None]
+                                               and self['net_assets_eoy'] > 0) else None)
+        self['cy_debt_ratio'] = (self['total_liabilities_eoy'] / self['total_assets_eoy']
+                                 if self['total_liabilities_eoy'] is not None
+                                 and (self['total_assets_eoy'] not in [0, None]
+                                      and self['total_assets_eoy'] > 0) else None)
+        self['cy_financial_leverage'] = (self['total_liabilities_eoy'] / self['net_assets_eoy']
+                                         if self['total_liabilities_eoy'] is not None
+                                         and (self['net_assets_eoy'] not in [0, None]
+                                              and self['net_assets_eoy'] > 0) else None)
+        
+    def _set_credit_score(self):
+        cs = 0
+        cs += min(max(self.float_or_zero(self['cy_operating_reserve']) * 0.4, -2), 2)
+        cs += min(max(self.float_or_zero(self['annual_net_assets_growth']) * 20, -2), 2)
+        cs += min(max(self.float_or_zero(self['cy_operating_efficiency']), -2), 2)
+        cs += min(max(self.float_or_zero(self['cy_revenue_less_expenses']) * 20, -2), 2)
+        cs += min(max(self.float_or_zero(self['annual_total_assets_growth']) * 20, -2), 2)
+        cs += min(max(self.float_or_zero(self['cy_leverage_efficiency']), -2), 2)
+        cs += min(max(self.float_or_zero(self['cy_debt_ratio']) * -4 + 2, -2), 2)
+        cs += min(max(self.float_or_zero(self['cy_financial_leverage']) * -1 + 2, -2), 2)
+        if self['annual_total_revenue_growth'] is not None and self['annual_total_expense_growth'] is not None:
+            if self['annual_total_revenue_growth'] > self['annual_total_expense_growth']:
+                cs += 0.5
+            elif self['annual_total_revenue_growth'] < self['annual_total_expense_growth']:
+                cs -= 0.5
+        score = 300 + 550 / (1 + math.exp(-0.2 * cs))
+        if cs == 0:
+            self['cy_credit_score'] = None
+        else:
+            self['cy_credit_score'] = int(score)
                     
     def __missing__(self, key):
         return None
@@ -109,3 +158,7 @@ class Organization(dict):
     @staticmethod
     def int_or_zero(x):
         return int(x or 0)
+    
+    @staticmethod
+    def float_or_zero(x):
+        return float(x or 0)
