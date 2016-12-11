@@ -188,7 +188,6 @@ h3,
 .h3,
 h4,
 .h4 {
-	text-transform: uppercase;
 	font-size: 22px;
 	font-size: 1rem;
 	font-weight: 700;
@@ -205,12 +204,12 @@ h4,
 	h3,
 	.h3 {
 		font-size: 18px;
-		font-size: 0.818rem;
+		font-size: 1.818rem;
 	}
 	
 	h4,
 	.h4	{
-		font-size: 16px;
+		font-size: 24px;
 	}
 }
 
@@ -1168,7 +1167,9 @@ input.text:focus {
 	.level-img-right {
 		padding: 0;
 	}
+}
 
+@media ( min-width: 976px ) {
 	.level-img-right > .container {
 		position: relative;
 		margin-top: 2.727rem;
@@ -1179,6 +1180,7 @@ input.text:focus {
 		
 	}
 }
+
 
 .level-img-right {
 	padding-bottom: 0;
