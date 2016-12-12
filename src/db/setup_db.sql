@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS tax_exempt_organizations (
   cy_debt_ratio FLOAT(4,2),
   cy_financial_leverage FLOAT(4,2),
   cy_credit_score INT,
-  cy_credit_score_percentile FLOAT(2,2),
+  cy_credit_score_percentile FLOAT(3,2),
   PRIMARY KEY (electronic_id, tax_year)
 );
 
