@@ -20,12 +20,14 @@ def get_score():
     else:
         key = key
 
-    results = mysql_client.get_significant_fields(key)
+    results = mysql_client.query_by_key_metrics(key)
     if results is None:
         return json.dumps({'status':'OK', 'key':key, 'name':None})
     else:
         name, credit_score, total_assets, total_revenues, net_assets, \
         organization_type, tax_year, score_percentile = results
+        if score_percentile != 'Unavailable':
+            score_percentile = '{0:.0%}'.format(score_percentile)
         return json.dumps({'status':'OK',
                            'key':key,
                            'name': name,
@@ -35,7 +37,7 @@ def get_score():
                            'net_assets':net_assets,
                            'tax_status': organization_type,
                            'tax_year': tax_year,
-                           'score_percentile': '{0:.0%}'.format(score_percentile)})
+                           'score_percentile': score_percentile})
 
 @app.route('/id/<id>', methods = ['GET'])
 def get_id(id):
