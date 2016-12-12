@@ -48,6 +48,10 @@ class DBClient(object):
 
     def upsert(self, org):
         """Insert an organization object if it doesn't exist, update it otherwise."""
+        if org['tax_year'] is None or \
+           org['form_type'] is None:
+               return
+
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:

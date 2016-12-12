@@ -1,9 +1,10 @@
+import logging
+import json
 from db.dbclient import DBClient
 from flask import Flask
 from flask import render_template
 from flask import request
 from flask import jsonify
-import json
 
 mysql_client = DBClient()
 app = Flask(__name__)
@@ -38,12 +39,6 @@ def get_score():
                            'tax_status': organization_type,
                            'tax_year': tax_year,
                            'score_percentile': score_percentile})
-
-@app.route('/id/<id>', methods = ['GET'])
-def get_id(id):
-    # This method is for debug only. Should be removed in the final version.
-    results = mysql_client.get_significant_fields(id)
-    return str(results) + '\n'
 
 @app.route('/status', methods = ['GET'])
 def get_status():
