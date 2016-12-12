@@ -20,11 +20,14 @@ $(function() {
                     }, 2000);
                 }
                 else {
-                    $('#name').text("Organization Name: " + returnedData.name);
+                    $('#name').text("Name: " + returnedData.name);
                     $('#total_score').text("Score: " + returnedData.score);
+                    $('#type').text("Tax Status: " + returnedData.tax_status);
+                    $('#tax_year').text("Tax Year: " + returnedData.tax_year);
+                    //$('#score_percentile').text("Score Percentile: " + returnedData.score);
                     $('#total_assets').text("Total Assets: $" + returnedData.total_assets);
                     $('#total_revenues').text("Total Revenues: $" + returnedData.total_revenues);
-                    $('#net_assests').text("Net Assests: $" + returnedData.net_assests);
+                    $('#net_assets').text("Net Assets: $" + returnedData.net_assets);
                     $('#results').show(1500);
                     console.log(response);
                     // scroll to results

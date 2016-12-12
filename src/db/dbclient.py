@@ -180,5 +180,8 @@ class DBClient(object):
         credit_score = 'Unavailable' if id_result[38] is None else id_result[38]
         total_assets = 'Unavailable' if id_result[22] is None else id_result[22]
         total_revenues = 'Unavailable' if id_result[5] is None else id_result[5]
-        net_assests = 'Unavailable' if id_result[26] is None else id_result[26]
-        return name, credit_score, total_assets, total_revenues, net_assests
+        net_assets = 'Unavailable' if id_result[26] is None else id_result[26]
+        organization_type = 'Unavailable' if id_result[4] is None else id_result[4]
+        tax_year = 'Unavailable' if id_result[1] is None else id_result[1]
+        return name, credit_score, total_assets, total_revenues, net_assets, \
+               organization_type, tax_year
