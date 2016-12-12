@@ -24,6 +24,9 @@ COLUMNS = (
           'cy_financial_leverage, cy_credit_score)'
 )
 
+KEY_METRICS = {
+}
+
 class DBClient(object):
 
     """The client class to interact with the mysql database"""
@@ -155,13 +158,16 @@ class DBClient(object):
             cursor.close()
             cnx.close()
 
-    def update_score_percentile(self, score, electronic_id):
+    def query_by_key_metrics(self, electronic_id):
+        pass
+
+    def update_score_percentile(self, percentile, electronic_id):
         """Update an existing organization with the given credit score percentile."""
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:
             update_existing_record = 'UPDATE ' + DML_TABLE + ' SET cy_credit_score_percentile=%s WHERE ELECTRONIC_ID = %s'
-            cursor.execute(update_existing_record, (score, electronic_id))
+            cursor.execute(update_existing_record, (percentile, electronic_id))
             cnx.commit()
         except Exception, error:
             self.logger.error('Fail to update organization %s', electronic_id)
@@ -183,5 +189,6 @@ class DBClient(object):
         net_assets = 'Unavailable' if id_result[26] is None else id_result[26]
         organization_type = 'Unavailable' if id_result[4] is None else id_result[4]
         tax_year = 'Unavailable' if id_result[1] is None else id_result[1]
+        score_percentile = 'Unavailable' if id_result[39] is None else id_result[39]
         return name, credit_score, total_assets, total_revenues, net_assets, \
-               organization_type, tax_year
+               organization_type, tax_year, score_percentile

@@ -24,7 +24,7 @@ $(function() {
                     $('#total_score').text("Score: " + returnedData.score);
                     $('#type').text("Tax Status: " + returnedData.tax_status);
                     $('#tax_year').text("Tax Year: " + returnedData.tax_year);
-                    //$('#score_percentile').text("Score Percentile: " + returnedData.score);
+                    $('#score_percentile').text("Score Percentile: " + returnedData.score_percentile);
                     $('#total_assets').text("Total Assets: $" + returnedData.total_assets);
                     $('#total_revenues').text("Total Revenues: $" + returnedData.total_revenues);
                     $('#net_assets').text("Net Assets: $" + returnedData.net_assets);
