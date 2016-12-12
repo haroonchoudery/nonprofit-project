@@ -45,9 +45,10 @@ def scan_source_data(source):
 
             # We only care about organization with valid score here.
             if org['cy_credit_score'] is not None:
-                # If an organization type is encountered for the first time, create a list for it
+                # If an organization type is encountered for the first time, create a list for it.
                 if org['organization_type'] not in org_grouped_by_type:
                     org_grouped_by_type[org['organization_type']] = []
+                # Use priority queue to store the score, id tuple so that we can always keep it in order.
                 priority_queue = org_grouped_by_type[org['organization_type']]
                 heappush(priority_queue, (org['cy_credit_score'], org['electronic_id']))
 

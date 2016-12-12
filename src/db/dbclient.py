@@ -24,8 +24,8 @@ COLUMNS = (
           'cy_financial_leverage, cy_credit_score)'
 )
 
-KEY_METRICS = {
-}
+KEY_METRICS = 'organization_name, cy_credit_score, total_assets_eoy, cy_total_revenue, ' \
+              'net_assets_eoy, organization_type, tax_year, cy_credit_score_percentile'
 
 class DBClient(object):
 
@@ -125,41 +125,26 @@ class DBClient(object):
             cursor.close()
             cnx.close()
 
-    def query_by_name(self, organization_name):
+    def query_by_key_metrics(self, electronic_id):
+        """Return key metrics which should show up in the credit report."""
         cnx = self.cnxpool.get_connection()
         cursor = cnx.cursor()
         try:
-            query = 'SELECT * FROM ' + VIEW + ' WHERE organization_name = %s'
-            cursor.execute(query, (organization_name,))
-            result = cursor.fetchall()
-            if result is None or len(result) == 0:
+            query = 'SELECT ' + KEY_METRICS + ' FROM ' + VIEW + ' WHERE electronic_id = %s'
+            cursor.execute(query, (electronic_id,))
+            raw_results = cursor.fetchall()
+            if raw_results is None or len(raw_results) == 0:
                 return None
             else:
-                return result[0]
+                # Convert None to Unavailable in the result set
+                results = ['Unavailable' if item is None else item for item in raw_results[0]]
+                return results
         except Exception, error:
-            self.logger.error('Fail to query organization %s', org['electronic_id'])
+            self.logger.error('Fail to query organization %s', 'electronic_id')
             self.logger.exception(error)
         finally:
             cursor.close()
             cnx.close()
-
-    def query_by_type(self, organization_type, limit):
-        cnx = self.cnxpool.get_connection()
-        cursor = cnx.cursor()
-        try:
-            query = 'SELECT * FROM ' + VIEW + \
-                    ' WHERE organization_type = %s ORDER BY annual_total_revenue_growth DESC LIMIT %s'
-            cursor.execute(query, (organization_type, limit))
-            result = cursor.fetchall()
-            return result
-        except Exception, error:
-            print error
-        finally:
-            cursor.close()
-            cnx.close()
-
-    def query_by_key_metrics(self, electronic_id):
-        pass
 
     def update_score_percentile(self, percentile, electronic_id):
         """Update an existing organization with the given credit score percentile."""
@@ -175,20 +160,3 @@ class DBClient(object):
         finally:
             cursor.close()
             cnx.close()
-
-    def get_significant_fields(self, key):
-        """Return key metrics which should show up in the credit report."""
-        id_result = self.query_by_id(key)
-        if id_result is None or len(id_result) == 0:
-            return None
-
-        name = id_result[3]
-        credit_score = 'Unavailable' if id_result[38] is None else id_result[38]
-        total_assets = 'Unavailable' if id_result[22] is None else id_result[22]
-        total_revenues = 'Unavailable' if id_result[5] is None else id_result[5]
-        net_assets = 'Unavailable' if id_result[26] is None else id_result[26]
-        organization_type = 'Unavailable' if id_result[4] is None else id_result[4]
-        tax_year = 'Unavailable' if id_result[1] is None else id_result[1]
-        score_percentile = 'Unavailable' if id_result[39] is None else id_result[39]
-        return name, credit_score, total_assets, total_revenues, net_assets, \
-               organization_type, tax_year, score_percentile
