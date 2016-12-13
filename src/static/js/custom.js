@@ -1,17 +1,24 @@
 $(function() {
+    // create variable for form div and search input
 	var query = $('#query');
 	var key = $('#key');
 
+
     $(query).submit(function(event) {
+        // prevent form from redirecting to different URL
         event.preventDefault();
         $.ajax({
+            // serialize data and send to Flask controller
             url: '/score',
             data: $(key).serialize(),
             type: 'POST',
+
             success: function(response) {
                 $('#error').hide();
                 $('#results').hide();
             	var returnedData = JSON.parse(response);
+
+                // if null is returned, display notfound.html and scroll down to result
                 if(returnedData.name == null){
                     $('#error').show(1500);
                     console.log(response);
@@ -19,6 +26,8 @@ $(function() {
                         scrollTop: $("#notfound").offset().top
                     }, 2000);
                 }
+
+                // otherwise, return all below data and scroll down to displayed data
                 else {
                     $('#name').text("Name: " + returnedData.name);
                     $('#total_score').text("Score: " + returnedData.score);
@@ -45,7 +54,7 @@ $(function() {
 
 
 
-
+// scroll animation for anchor tags
 $(function() {
     $('a.page-scroll').bind('click', function(event) {
         var $anchor = $(this);
