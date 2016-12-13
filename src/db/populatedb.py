@@ -8,7 +8,7 @@ from heapq import heappush, heappop
 from db.dbclient import DBClient
 
 # The number of objects to process in the source index file
-LIMIT = 500
+LIMIT = 5000
 
 # This points to the most recent electronic 990 filing index hosted by Amazon
 DATA_SOURCE = {
