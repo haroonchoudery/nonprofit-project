@@ -29,5 +29,5 @@ Run the Application. It will use port 80 by default:
 python \<directory to the nonprofit-project\>/src/webapp.py  
 
 Smoke Check:  
-curl localhost/status
-It is working!
+curl localhost/status  
+It is working!  
