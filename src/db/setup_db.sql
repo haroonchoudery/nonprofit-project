@@ -1,5 +1,5 @@
 /*
-This script will construct the mysql database.
+This script contains the schema for our database.
 */
 
 # Create the database

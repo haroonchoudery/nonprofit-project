@@ -1,5 +1,5 @@
 """
-This module provides the functionalities to process the index of non profit
+This module provides the functionalities to process the index file of non profit
 electronic IRS filings. The filings index is host by Amazon and exposed to the
 public as a JSON page. We will only process filings in 990 and 990EZ form. These
 will cover non profits with annual gross receipts larger than 50,000. A detailed

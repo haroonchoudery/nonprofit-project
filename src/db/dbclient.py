@@ -1,3 +1,8 @@
+"""
+This class provides the functionalities to interact with the MySQL database. The
+other parts of the product can query or update the database via this class.
+"""
+
 import sys
 import os
 import logging

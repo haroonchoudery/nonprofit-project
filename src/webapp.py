@@ -1,3 +1,8 @@
+"""
+This script is the main file for our web application based on Flask framework.
+It contains the URL routing and business logic to handle valid requests. 
+"""
+
 import logging
 import json
 from db.dbclient import DBClient

@@ -2,9 +2,9 @@ import math
 
 class Organization(dict):
 
-    """This class represents an object of a tax exempt organization.
-       It will process the raw data of an nonprofit organization and compute
-       various advanced data fields.
+    """This class is an abstraction of a real life tax exempt organization.
+       It contains the utility to process the raw data extracted from a 990 tax
+       form, and computes a credit score based on the raw data.
     """
 
     def __init__(self, fields):
